@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "example.name" . }}-deployment
+  name: {{ template "example.name" . }}
   labels:
     app: {{ template "example.name" . }}
     chart: {{ $.Chart.Name }}
