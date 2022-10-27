@@ -5,7 +5,7 @@ servers:
     pullPolicy: IfNotPresent
     containerPort: 10003
   - name: upstream-example-03-02
-    replicas: 2
+    replicas: 3
     image: emmerson/upstream
     tag: mockv2
     pullPolicy: IfNotPresent
