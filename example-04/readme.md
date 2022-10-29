@@ -3,6 +3,7 @@ Simple PoC to deploy some containers using ApplicationSet to recreate multiple e
 
 More info at: 
 - https://argocd-applicationset.readthedocs.io/en/stable/Generators/
+- https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/
 - https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
 - https://amralaayassen.medium.com/how-to-create-argocd-applications-automatically-using-applicationset-automation-of-the-gitops-59455eaf4f72
 
