@@ -1,0 +1,18 @@
+servers:
+  - name: upstream-example-03-01
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-example-03-02
+    replicas: 3
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-example-03-03
+    replicas: 1
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003

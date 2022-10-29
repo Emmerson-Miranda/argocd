@@ -1,7 +1,8 @@
 # Introduction
 Simple PoC to deploy some containers using very basic helmcharts.
 
-This example is based on https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
+More info at: 
+- https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
 
 Installation instructions
 

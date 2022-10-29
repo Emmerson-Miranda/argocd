@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-04
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - namespace: dev
+      - namespace: int
+      - namespace: uat
+  template:
+    metadata:
+      name: 'example-04-{{namespace}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        targetRevision: HEAD
+        path: example-04/helmchart
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: 'example-04-{{namespace}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

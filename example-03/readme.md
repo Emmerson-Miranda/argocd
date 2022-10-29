@@ -1,7 +1,8 @@
 # Introduction
-Simple PoC to deploy some containers using very basic helmcharts.
+Simple PoC to deploy some containers using basic helmcharts and a dynamic list of containers given in the values.yaml.
 
-This example is based on https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
+More info at: 
+- https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
 
 
 
