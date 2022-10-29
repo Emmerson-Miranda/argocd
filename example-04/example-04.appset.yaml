@@ -23,9 +23,8 @@ spec:
         targetRevision: '{{targetRevision}}'
         path: example-04/helmchart
         helm:
-          parameters:
-          - name: environment
-            value: '{{namespace}}'
+          values: |
+            environment: '{{namespace}}'
       destination:
         server: "https://kubernetes.default.svc"
         namespace: 'example-04-{{namespace}}'
