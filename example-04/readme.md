@@ -1,5 +1,5 @@
 # Introduction
-Simple PoC to deploy some containers using ApplicationSet to recreate multiple environments.
+PoC to deploy in multiple environments using ApplicationSet, Helm and overriding some values per environment.
 
 More info at: 
 - https://argo-cd.readthedocs.io/en/stable/user-guide/application-set/
@@ -12,6 +12,14 @@ More info at:
 
 Installation instructions
 
+Creating
+
 ```
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-04/example-04.appset.yaml
+```
+
+Deleting
+
+```
+kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-04/example-04.appset.yaml
 ```
