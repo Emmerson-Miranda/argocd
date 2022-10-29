@@ -8,8 +8,11 @@ spec:
   - list:
       elements:
       - namespace: dev
+        targetRevision: HEAD
       - namespace: int
+        targetRevision: HEAD
       - namespace: uat
+        targetRevision: HEAD
   template:
     metadata:
       name: 'example-04-{{namespace}}'
@@ -17,7 +20,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/Emmerson-Miranda/argocd.git
-        targetRevision: HEAD
+        targetRevision: '{{targetRevision}}'
         path: example-04/helmchart
       destination:
         server: "https://kubernetes.default.svc"
