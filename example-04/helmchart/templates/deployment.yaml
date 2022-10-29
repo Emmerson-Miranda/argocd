@@ -9,6 +9,7 @@ metadata:
     chart: {{ $.Chart.Name }}
     release: {{ $.Release.Name }}
     heritage: {{ $.Release.Service }}
+    environment: {{ $.Values.environment }}
 spec:
   replicas: {{ template "example.replicas" . }}
   revisionHistoryLimit: 3
@@ -21,6 +22,7 @@ spec:
       labels:
         app: {{ template "example.name" . }}
         release: {{ $.Release.Name }}
+        environment: {{ $.Values.environment }}
     spec:
       containers:
         - name: {{ template "example.name" . }}
@@ -30,5 +32,8 @@ spec:
             - name: http
               containerPort: {{ .containerPort }}
               protocol: TCP
+          env:
+          - name: ENVIRONMENT
+            value: {{ $.Values.environment }}
 
 {{- end }} 

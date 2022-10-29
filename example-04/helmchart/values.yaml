@@ -1,3 +1,4 @@
+environment: not-specified
 servers:
   - name: upstream-example-03-01
     image: emmerson/upstream

@@ -22,6 +22,10 @@ spec:
         repoURL: https://github.com/Emmerson-Miranda/argocd.git
         targetRevision: '{{targetRevision}}'
         path: example-04/helmchart
+        helm:
+          parameters:
+          - name: environment
+            value: '{{namespace}}'
       destination:
         server: "https://kubernetes.default.svc"
         namespace: 'example-04-{{namespace}}'
