@@ -12,7 +12,7 @@ metadata:
     environment: {{ $.Values.environment }}
     project: {{ $.Values.project }}
     configuration.path: {{ $.Values.configuration.path }}
-    configuration.path: {{ $.Values.configuration.basename }}
+    configuration.basename: {{ $.Values.configuration.basename }}
 spec:
   replicas: {{ $.Values.replicas }}
   revisionHistoryLimit: 3
