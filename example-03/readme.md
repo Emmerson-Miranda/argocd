@@ -11,3 +11,9 @@ Installation instructions
 ```
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-03/example-03.app.yaml
 ```
+
+Deleting
+
+```
+kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-03/example-03.app.yaml
+```
