@@ -1,0 +1,15 @@
+{
+    "project": "example-05",
+    "targetRevision": "HEAD",
+    "environment": {
+      "name": "int",
+      "replicas": 1
+    },
+    "syncPolicy":{
+      "syncOptions":{
+        "ApplyOutOfSyncOnly": "true"
+      }
+    }
+}
+  
+  

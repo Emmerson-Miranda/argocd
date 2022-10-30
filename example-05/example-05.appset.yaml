@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-05
+  namespace: argocd
+spec:
+  generators:
+  - git:
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        revision: HEAD
+        files:
+        - path: "example-05/environment-config/**/config.json"
+  template:
+    metadata:
+      name: '{{project}}-{{environment.name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        targetRevision: '{{targetRevision}}'
+        path: example-05/helmchart
+        helm:
+          values: |
+            environment: '{{environment.name}}'
+            replicas: '{{environment.replicas}}'
+            project: '{{project}}'
+            configuration:
+              path: '{{path}}'
+              basename: '{{path.basenameNormalized}}'
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: '{{project}}-{{environment.name}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly={{syncPolicy.syncOptions.ApplyOutOfSyncOnly}}
+          - PrunePropagationPolicy=foreground

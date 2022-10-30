@@ -1,0 +1,42 @@
+{{- range $.Values.servers }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "example.name" . }}
+  labels:
+    app: {{ template "example.name" . }}
+    chart: {{ $.Chart.Name }}
+    release: {{ $.Release.Name }}
+    heritage: {{ $.Release.Service }}
+    environment: {{ $.Values.environment }}
+    project: {{ $.Values.project }}
+    configuration.path: {{ $.Values.configuration.path }}
+    configuration.path: {{ $.Values.configuration.basename }}
+spec:
+  replicas: {{ $.Values.replicas }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ template "example.name" . }}
+      release: {{ $.Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "example.name" . }}
+        release: {{ $.Release.Name }}
+        environment: {{ $.Values.environment }}
+    spec:
+      containers:
+        - name: {{ template "example.name" . }}
+          image: "{{ .image }}:{{ .tag }}"
+          imagePullPolicy: {{ $.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .containerPort }}
+              protocol: TCP
+          env:
+          - name: ENVIRONMENT
+            value: {{ $.Values.environment }}
+
+{{- end }} 

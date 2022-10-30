@@ -1,0 +1,21 @@
+environment: not-specified
+replicas: 1
+configuration:
+  path: not-specified
+  basename: not-specified
+servers:
+  - name: upstream-example-03-01
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-example-03-02
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-example-03-03
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
