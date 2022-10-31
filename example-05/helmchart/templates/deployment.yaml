@@ -9,10 +9,10 @@ metadata:
     chart: {{ $.Chart.Name }}
     release: {{ $.Release.Name }}
     heritage: {{ $.Release.Service }}
-    environment: "{{ $.Values.environment }}"
-    project: "{{ $.Values.project }}"
-    configuration.path: "{{ $.Values.configuration.path }}"
-    configuration.basename: "{{ $.Values.configuration.basename }}"
+    environment: {{ $.Values.environment | squote}}
+    project: {{ $.Values.project | squote}}
+    configuration.path: {{ $.Values.configuration.path | squote}}
+    configuration.basename: {{ $.Values.configuration.basename | squote}}
 spec:
   replicas: {{ $.Values.replicas }}
   revisionHistoryLimit: 3
