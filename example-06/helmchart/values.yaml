@@ -1,8 +1,13 @@
 environment: not-specified
 config:
+  project: not-specified
+  targetRevision: "HEAD"
   environment:
     name: not-specified
     replicas: 1
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"
 configuration:
   path: not-specified
   basename: not-specified
