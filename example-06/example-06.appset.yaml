@@ -12,7 +12,7 @@ spec:
         - path: "example-06/environment-config/**/config.yaml"
   template:
     metadata:
-      name: '{config.project}}-{{config.environment.name}}'
+      name: '{{config.project}}-{{config.environment.name}}'
     spec:
       project: default
       source:

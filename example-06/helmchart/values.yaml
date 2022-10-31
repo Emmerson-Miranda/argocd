@@ -12,17 +12,17 @@ configuration:
   path: not-specified
   basename: not-specified
 servers:
-  - name: upstream-example-03-01
+  - name: upstream-06-01
     image: emmerson/upstream
     tag: mockv2
     pullPolicy: IfNotPresent
     containerPort: 10003
-  - name: upstream-example-03-02
+  - name: upstream-06-02
     image: emmerson/upstream
     tag: mockv2
     pullPolicy: IfNotPresent
     containerPort: 10003
-  - name: upstream-example-03-03
+  - name: upstream-06-03
     image: emmerson/upstream
     tag: mockv2
     pullPolicy: IfNotPresent
