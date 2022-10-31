@@ -1,0 +1,9 @@
+config:
+  project: "example-06"
+  targetRevision: "HEAD"
+  environment:
+    name: "uat"
+    replicas: 2
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"
