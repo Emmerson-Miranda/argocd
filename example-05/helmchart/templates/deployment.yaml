@@ -11,7 +11,7 @@ metadata:
     heritage: {{ $.Release.Service }}
     environment: {{ $.Values.environment | squote}}
     project: {{ $.Values.project | squote}}
-    configuration.path: {{ $.Values.configuration.path | squote}}
+    configuration.path: {{ printf "%s" $.Values.configuration.path}}
     configuration.basename: {{ $.Values.configuration.basename | squote}}
 spec:
   replicas: {{ $.Values.replicas }}
