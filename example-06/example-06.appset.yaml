@@ -27,6 +27,7 @@ spec:
               environment: 
                 name: '{{config.environment.name}}'
                 replicas: {{config.environment.replicas}}
+            something: {{ toYaml config | nindent 2 }}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
