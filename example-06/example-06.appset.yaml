@@ -24,8 +24,9 @@ spec:
             config:
               project: '{{config.project}}'
               targetRevision: '{{config.targetRevision}}'
-              a: 'b'
-              environment: {{config.environment}}
+              environment: 
+                name: '{{config.environment.name}}'
+                replicas: {{config.environment.replicas}}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
