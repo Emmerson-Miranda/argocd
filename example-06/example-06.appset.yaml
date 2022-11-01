@@ -21,7 +21,7 @@ spec:
         path: example-06/helmchart
         helm:
           values: |
-            config: '{{config}}'
+            config: {{config}}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
