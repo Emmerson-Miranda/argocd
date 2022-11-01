@@ -27,7 +27,6 @@ spec:
               environment: 
                 name: '{{config.environment.name}}'
                 replicas: {{config.environment.replicas}}
-            something: {{config}}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
