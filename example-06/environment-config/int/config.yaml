@@ -3,7 +3,7 @@ config:
   targetRevision: "HEAD"
   environment:
     name: "int"
-    replicas: 1
+    replicas: 2
   syncPolicy:
     syncOptions:
       ApplyOutOfSyncOnly: "true"

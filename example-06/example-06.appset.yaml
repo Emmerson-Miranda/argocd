@@ -22,10 +22,10 @@ spec:
         helm:
           values: |
             config:
-              project: "example-06"
-              targetRevision: "HEAD"
-              a: "b"
-              environment:{{config.environment}}
+              project: '{{config.project}}'
+              targetRevision: '{{config.targetRevision}}'
+              a: 'b'
+              environment: {{config.environment}}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
