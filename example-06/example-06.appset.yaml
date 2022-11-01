@@ -21,7 +21,12 @@ spec:
         path: example-06/helmchart
         helm:
           values: |
-            config: {{config}}
+            config:
+              project: "example-06"
+              targetRevision: "HEAD"
+              environment:
+                name: "dev"
+                replicas: 1
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
