@@ -24,6 +24,7 @@ spec:
             config:
               project: "example-06"
               targetRevision: "HEAD"
+              a: "b"
               environment:{{config.environment}}
             configuration:
               path: '{{path}}'
