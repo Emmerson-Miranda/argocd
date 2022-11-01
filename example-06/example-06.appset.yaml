@@ -24,9 +24,7 @@ spec:
             config:
               project: "example-06"
               targetRevision: "HEAD"
-              environment:
-                name: "dev"
-                replicas: 1
+              environment:{{config.environment}}
             configuration:
               path: '{{path}}'
               basename: '{{path.basenameNormalized}}'
