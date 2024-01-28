@@ -22,7 +22,13 @@ Creating
 ```
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-07/example-07.appset.yaml
 ```
-![3 environments](./example-07.png)
+
+As per config in a separate git repo there is only one replica for DEV.
+![3 environments](./example-07-dev.png)
+
+
+As per config in a separate git repo there are three replicas for UAT.
+![3 environments](./example-07-uat.png)
 
 Deleting
 

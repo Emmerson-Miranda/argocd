@@ -22,7 +22,6 @@ Creating
 ```
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-08/example-08.appset.yaml
 ```
-![3 environments](./example-08.png)
 
 Deleting
 
