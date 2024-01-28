@@ -1,0 +1,26 @@
+environment: not-specified
+config:
+  project: not-specified
+  targetRevision: "HEAD"
+  environment:
+    name: not-specified
+    replicas: 1
+configuration:
+  path: not-specified
+  basename: not-specified
+servers:
+  - name: upstream-08-01
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-08-02
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
+  - name: upstream-08-03
+    image: emmerson/upstream
+    tag: mockv2
+    pullPolicy: IfNotPresent
+    containerPort: 10003
