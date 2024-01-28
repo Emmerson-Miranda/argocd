@@ -16,9 +16,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: '{{config.repoURL}}'
+        repoURL: https://github.com/{{config.repoURL}}
         targetRevision: '{{config.targetRevision}}'
-        path: '{{config.path}}'
+        path: ./{{config.path}}
         helm:
           values: |
             config:
