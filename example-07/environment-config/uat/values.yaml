@@ -1,5 +1,5 @@
-config:
-  project: "example-07"
-  environment:
-    name: "uat"
-    replicas: 3
+---
+project: "example-07"
+environment:
+  name: "uat"
+  replicas: 3

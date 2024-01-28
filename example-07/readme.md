@@ -7,6 +7,7 @@ The environment generation is dynamic and comes from a git repo, for simplicity 
 
 More info at: 
 - https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
+- https://argo-cd.readthedocs.io/en/release-2.9/user-guide/multiple_sources/
 - https://argo-cd.readthedocs.io/en/stable/user-guide/application-set/
 - https://argo-cd.readthedocs.io/en/stable/user-guide/helm/
 - https://argocd-applicationset.readthedocs.io/en/stable/Generators/

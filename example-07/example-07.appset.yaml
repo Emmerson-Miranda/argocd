@@ -13,7 +13,7 @@ spec:
         - path: "example-07/environment-config/**/config.yaml"
   template:
     metadata:
-      name: '{{config.project}}-{{config.environment.name}}'
+      name: '{{config.project}}-{{config.environment}}'
     spec:
       project: default
       sources:
@@ -22,13 +22,13 @@ spec:
         path: ./{{config.path}}
         helm:
           valueFiles:
-          - $values/{{config.project}}/environment-config/{{config.environment.name}}/values.yaml
+          - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
       - repoURL: https://github.com/{{config.repoURL}}
         targetRevision: '{{config.targetRevision}}'
         ref: values
       destination:
         server: "https://kubernetes.default.svc"
-        namespace: '{{config.project}}-{{config.environment.name}}'
+        namespace: '{{config.project}}-{{config.environment}}'
       syncPolicy:
         automated:
           selfHeal: true

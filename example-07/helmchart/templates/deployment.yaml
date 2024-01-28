@@ -9,12 +9,12 @@ metadata:
     chart: {{ $.Chart.Name }}
     release: {{ $.Release.Name }}
     heritage: {{ $.Release.Service }}
-    environment: {{ $.Values.config.environment.name | squote}}
-    project: {{ $.Values.config.project | squote}}
+    environment: {{ $.Values.environment.name | squote}}
+    project: {{ $.Values.project | squote}}
     #configuration.path: {{ printf "%s" $.Values.configuration.path}}
     configuration.basename: {{ $.Values.configuration.basename | squote}}
 spec:
-  replicas: {{ $.Values.config.environment.replicas }}
+  replicas: {{ $.Values.environment.replicas }}
   revisionHistoryLimit: 3
   selector:
     matchLabels:
@@ -25,7 +25,7 @@ spec:
       labels:
         app: {{ template "example.name" . }}
         release: {{ $.Release.Name }}
-        environment: {{ $.Values.config.environment.name }}
+        environment: {{ $.Values.environment.name }}
     spec:
       containers:
         - name: {{ template "example.name" . }}
@@ -37,6 +37,6 @@ spec:
               protocol: TCP
           env:
           - name: ENVIRONMENT
-            value: {{ $.Values.config.environment.name }}
+            value: {{ $.Values.environment.name }}
 
 {{- end }} 

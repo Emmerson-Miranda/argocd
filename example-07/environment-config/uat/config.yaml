@@ -3,9 +3,7 @@ config:
   repoURL: "Emmerson-Miranda/argocd.git"
   path: "example-07/helmchart"
   targetRevision: "HEAD"
-  environment:
-    name: "uat"
-    replicas: 2
+  environment: "uat"
   syncPolicy:
     syncOptions:
       ApplyOutOfSyncOnly: "true"
