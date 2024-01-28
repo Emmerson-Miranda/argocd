@@ -1,6 +1,8 @@
 # Introduction
 PoC to deploy in multiple environments using ApplicationSet, Helm and overriding some values per environment.
 
+*The values are override using a values.yaml from another repo.*
+
 The environment generation is dynamic and comes from a git repo, for simplicity I used the same git repo but a different folder.
 
 More info at: 

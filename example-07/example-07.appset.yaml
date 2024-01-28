@@ -16,21 +16,16 @@ spec:
       name: '{{config.project}}-{{config.environment.name}}'
     spec:
       project: default
-      source:
-        repoURL: https://github.com/{{config.repoURL}}
+      sources:
+      - repoURL: https://github.com/{{config.repoURL}}
         targetRevision: '{{config.targetRevision}}'
         path: ./{{config.path}}
         helm:
-          values: |
-            config:
-              project: '{{config.project}}'
-              targetRevision: '{{config.targetRevision}}'
-              environment: 
-                name: '{{config.environment.name}}'
-                replicas: {{config.environment.replicas}}
-            configuration:
-              path: '{{path}}'
-              basename: '{{path.basenameNormalized}}'
+          valueFiles:
+          - $values/{{config.project}}/environment-config/{{config.environment.name}}/values.yaml
+      - repoURL: https://github.com/{{config.repoURL}}
+        targetRevision: '{{config.targetRevision}}'
+        ref: values
       destination:
         server: "https://kubernetes.default.svc"
         namespace: '{{config.project}}-{{config.environment.name}}'
