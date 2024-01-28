@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-07
+  namespace: argocd
+spec:
+  generators:
+  - git:
+        # https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        revision: HEAD
+        files:
+        - path: "example-07/environment-config/**/config.yaml"
+  template:
+    metadata:
+      name: '{{config.project}}-{{config.environment.name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/{{config.repoURL}}
+        targetRevision: '{{config.targetRevision}}'
+        path: ./{{config.path}}
+        helm:
+          values: |
+            config:
+              project: '{{config.project}}'
+              targetRevision: '{{config.targetRevision}}'
+              environment: 
+                name: '{{config.environment.name}}'
+                replicas: {{config.environment.replicas}}
+            configuration:
+              path: '{{path}}'
+              basename: '{{path.basenameNormalized}}'
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: '{{config.project}}-{{config.environment.name}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly={{config.syncPolicy.syncOptions.ApplyOutOfSyncOnly}}
+          - PrunePropagationPolicy=foreground
