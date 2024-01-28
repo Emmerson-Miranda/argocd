@@ -4,6 +4,7 @@ PoC to deploy in multiple environments using ApplicationSet, Helm and overriding
 The environment generation is dynamic and comes from a git repo, for simplicity I used the same git repo but a different folder.
 
 More info at: 
+- https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
 - https://argo-cd.readthedocs.io/en/stable/user-guide/application-set/
 - https://argo-cd.readthedocs.io/en/stable/user-guide/helm/
 - https://argocd-applicationset.readthedocs.io/en/stable/Generators/

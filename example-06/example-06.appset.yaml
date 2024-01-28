@@ -6,6 +6,7 @@ metadata:
 spec:
   generators:
   - git:
+        # https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
         repoURL: https://github.com/Emmerson-Miranda/argocd.git
         revision: HEAD
         files:
