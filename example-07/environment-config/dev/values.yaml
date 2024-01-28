@@ -1,5 +1,0 @@
-config:
-  project: "example-07"
-  environment:
-    name: "dev"
-    replicas: 1
