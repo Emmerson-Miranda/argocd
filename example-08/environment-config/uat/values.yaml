@@ -1,5 +1,0 @@
----
-project: "example-07"
-environment:
-  name: "uat"
-  replicas: 3

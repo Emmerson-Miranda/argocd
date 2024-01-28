@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: example-07
+  name: example-08
   namespace: argocd
 spec:
   generators:
@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/Emmerson-Miranda/argocd.git
         revision: HEAD
         files:
-        - path: "example-07/environment-config/**/config.yaml"
+        - path: "example-08/environment-config/**/config.yaml"
   template:
     metadata:
       name: '{{config.project}}-{{config.environment}}'

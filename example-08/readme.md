@@ -20,12 +20,12 @@ Installation instructions
 Creating
 
 ```
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-07/example-07.appset.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-08/example-08.appset.yaml
 ```
-![3 environments](./example-07.png)
+![3 environments](./example-08.png)
 
 Deleting
 
 ```
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-07/example-07.appset.yaml
+kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-08/example-08.appset.yaml
 ```

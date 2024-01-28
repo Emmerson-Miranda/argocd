@@ -1,6 +1,6 @@
 apiVersion: v2
-name: helm-example-07
-description: A Helm chart for Kubernetes ArgoCD example-07
+name: helm-example-08
+description: A Helm chart for Kubernetes ArgoCD example-08
 
 # A chart can be either an 'application' or a 'library' chart.
 #
