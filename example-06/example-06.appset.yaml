@@ -16,9 +16,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        repoURL: '{{config.repoURL}}'
         targetRevision: '{{config.targetRevision}}'
-        path: example-06/helmchart
+        path: '{{config.path}}'
         helm:
           values: |
             config:

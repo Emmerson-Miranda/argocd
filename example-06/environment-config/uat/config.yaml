@@ -1,5 +1,7 @@
 config:
   project: "example-06"
+  repoURL: "https://github.com/Emmerson-Miranda/argocd.git"
+  path: "example-06/helmchart"
   targetRevision: "HEAD"
   environment:
     name: "uat"
