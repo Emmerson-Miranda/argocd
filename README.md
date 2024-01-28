@@ -1,5 +1,5 @@
-# argocd
-argocd examples
+# ArgoCD
+ArgoCD examples, latest test with "Version": "v2.9.0+4e084ac"
 
 ArgoCD Application CRD https://argoproj.github.io/argo-cd/operator-manual/application.yaml
 
@@ -22,3 +22,4 @@ Admin password
 ```bash
 kubectl -n argocd get secret argocd-initial-admin-secret -o json | jq .data.password -r | base64 -d
 ```
+
