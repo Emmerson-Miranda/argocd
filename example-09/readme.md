@@ -44,3 +44,6 @@ source.chart, or source.ref are required for source {deliveryhero/wiremock &Appl
 [$values/example-09/environment-config/dev/values.yaml],Parameters:[]HelmParameter{},ReleaseName:,Values:,FileParameters:
 []HelmFileParameter{},Version:,PassCredentials:false,IgnoreMissingValueFiles:false,SkipCrds:false,ValuesObject:nil,} nil nil nil }
 
+Unable to save changes: application spec for example-09-dev is invalid: InvalidSpecError: Unable to generate manifests in : 
+rpc error: code = Unknown desc = failed to get git client for repo https://github.com/Emmerson-Miranda/argocd.git;InvalidSpecError: 
+Unable to generate manifests in : rpc error: code = Unknown desc = Unable to resolve '{{config.targetRevision}}' to a commit SHA
