@@ -9,18 +9,18 @@ PoC to deploy in multiple environments using ApplicationSet, Helm and overriding
 Installation instructions
 
 Adding Helm repo to your console
-```
+```bash
 helm repo add deliveryhero https://charts.deliveryhero.io/
 ```
 
 Adding Helm repo to ArgoCD
-```
+```bash
 argocd repo add https://charts.deliveryhero.io/ --type helm --name deliveryhero
 ```
 
 Creating
 
-```
+```bash
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
 ```
 
@@ -33,6 +33,14 @@ As per config in a separate git repo there are three replicas for UAT.
 
 Deleting
 
-```
+```bash
 kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
 ```
+
+
+Unable to load data: error getting cached app managed resources: 
+InvalidSpecError: spec.source.repoURL and either source.path, 
+source.chart, or source.ref are required for source {deliveryhero/wiremock &ApplicationSourceHelm{ValueFiles:
+[$values/example-09/environment-config/dev/values.yaml],Parameters:[]HelmParameter{},ReleaseName:,Values:,FileParameters:
+[]HelmFileParameter{},Version:,PassCredentials:false,IgnoreMissingValueFiles:false,SkipCrds:false,ValuesObject:nil,} nil nil nil }
+

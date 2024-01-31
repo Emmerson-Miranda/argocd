@@ -18,6 +18,8 @@ spec:
       project: default
       sources:
       - repoURL: deliveryhero/wiremock
+        targetRevision: 1.4.1
+        chart: wiremock
         helm:
           valueFiles:
           - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
