@@ -23,7 +23,10 @@ spec:
         chart: wiremock
         helm:
           valueFiles:
-          - ./{{config.project}}/environment-config/{{config.environment}}/values.yaml
+            - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
+      - repoURL: https://github.com/{{config.repoURL}}
+        targetRevision: 'HEAD'
+        ref: values
       destination:
         server: "https://kubernetes.default.svc"
         namespace: '{{config.project}}-{{config.environment}}'
