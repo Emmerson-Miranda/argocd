@@ -3,3 +3,5 @@ project: "example-09"
 environment:
   name: "uat"
   replicas: 3
+hpa:
+  minpods: 3

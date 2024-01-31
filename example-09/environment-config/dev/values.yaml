@@ -3,3 +3,5 @@ project: "example-09"
 environment:
   name: "dev"
   replicas: 1
+hpa:
+  minpods: 1

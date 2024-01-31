@@ -17,9 +17,8 @@ spec:
       project: default
       sources:
       - helm:
-          parameters:
-            - name: hpa.minpods
-              value: '1'
+          valueFiles:
+            - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
         chart: wiremock
         repoURL: https://charts.deliveryhero.io/
         targetRevision: 1.4.1
