@@ -1,7 +1,5 @@
 ---
 project: "example-09"
 environment:
-  name: "dev"
-
-hpa:
-  minpods: 1
+  name: "int"
+  replicas: 2

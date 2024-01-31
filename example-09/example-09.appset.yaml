@@ -6,7 +6,6 @@ metadata:
 spec:
   generators:
   - git:
-        # https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
         repoURL: https://github.com/Emmerson-Miranda/argocd.git
         revision: HEAD
         files:
@@ -17,15 +16,15 @@ spec:
     spec:
       project: default
       sources:
-      - repoURL: deliveryhero
-        targetRevision: 1.4.1
-        path: ./
+      - helm:
+          parameters:
+            - name: hpa.minpods
+              value: '1'
         chart: wiremock
-        helm:
-          valueFiles:
-            - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
+        repoURL: https://charts.deliveryhero.io/
+        targetRevision: 1.4.1
       - repoURL: https://github.com/{{config.repoURL}}
-        targetRevision: 'HEAD'
+        targetRevision: '{{config.targetRevision}}'
         ref: values
       destination:
         server: "https://kubernetes.default.svc"

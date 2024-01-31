@@ -1,7 +1,9 @@
 config:
   project: "example-09"
   repoURL: "Emmerson-Miranda/argocd.git"
-  environment: "uat"
+  path: "example-09/helmchart"
+  targetRevision: "HEAD"
+  environment: "dev"
   syncPolicy:
     syncOptions:
       ApplyOutOfSyncOnly: "true"
