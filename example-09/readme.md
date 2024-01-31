@@ -21,7 +21,7 @@ argocd repo add https://charts.deliveryhero.io/ --type helm --name deliveryhero
 Creating
 
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.app.yaml
 ```
 
 As per config in a separate git repo there is only one replica for DEV.
@@ -34,7 +34,7 @@ As per config in a separate git repo there are three replicas for UAT.
 Deleting
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
+kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.app.yaml
 ```
 
 
