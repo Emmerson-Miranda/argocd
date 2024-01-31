@@ -17,15 +17,12 @@ spec:
     spec:
       project: default
       sources:
-      - repoURL: deliveryhero/wiremock
+      - repoURL: deliveryhero
         targetRevision: 1.4.1
         chart: wiremock
         helm:
           valueFiles:
-          - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
-      - repoURL: https://github.com/{{config.repoURL}}
-        targetRevision: '{{config.targetRevision}}'
-        ref: values
+          - ./{{config.project}}/environment-config/{{config.environment}}/values.yaml
       destination:
         server: "https://kubernetes.default.svc"
         namespace: '{{config.project}}-{{config.environment}}'
