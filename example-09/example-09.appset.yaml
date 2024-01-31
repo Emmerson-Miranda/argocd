@@ -19,6 +19,7 @@ spec:
       sources:
       - repoURL: deliveryhero
         targetRevision: 1.4.1
+        path: ./
         chart: wiremock
         helm:
           valueFiles:
