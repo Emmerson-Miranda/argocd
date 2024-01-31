@@ -1,0 +1,7 @@
+config:
+  project: "example-09"
+  repoURL: "Emmerson-Miranda/argocd.git"
+  environment: "dev"
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"

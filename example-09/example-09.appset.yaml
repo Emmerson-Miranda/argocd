@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: example-09
+  namespace: argocd
+spec:
+  generators:
+  - git:
+        # https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        revision: HEAD
+        files:
+        - path: "example-09/environment-config/**/config.yaml"
+  template:
+    metadata:
+      name: '{{config.project}}-{{config.environment}}'
+    spec:
+      project: default
+      sources:
+      - repoURL: deliveryhero/wiremock
+        helm:
+          valueFiles:
+          - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
+      - repoURL: https://github.com/{{config.repoURL}}
+        targetRevision: '{{config.targetRevision}}'
+        ref: values
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: '{{config.project}}-{{config.environment}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly={{config.syncPolicy.syncOptions.ApplyOutOfSyncOnly}}
+          - PrunePropagationPolicy=foreground
