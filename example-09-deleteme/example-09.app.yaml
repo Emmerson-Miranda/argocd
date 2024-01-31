@@ -2,12 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: example-09
-  namespace: example-09
+  namespace: argocd
 spec:
   project: default
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: example-09-dev
   sources:
     - repoURL: deliveryhero
       targetRevision: 1.4.1
@@ -15,6 +12,6 @@ spec:
         valueFiles:
           - ./example-09/environment-config/dev/values.yaml
       chart: wiremock
-    - repoURL: https://github.com/Emmerson-Miranda/argocd.git
-      targetRevision: 'HEAD'
-      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: example-09
