@@ -20,9 +20,9 @@ spec:
           valueFiles:
             - $values/{{config.project}}/environment-config/{{config.environment}}/values.yaml
         chart: wiremock
-        repoURL: https://charts.deliveryhero.io/
+        repoURL: https://{{config.repoHelmURL}}
         targetRevision: 1.4.1
-      - repoURL: https://github.com/{{config.repoURL}}
+      - repoURL: https://github.com/{{config.repoGitURL}}
         targetRevision: '{{config.targetRevision}}'
         ref: values
       destination:

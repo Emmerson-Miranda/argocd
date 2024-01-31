@@ -1,6 +1,7 @@
 config:
   project: "example-09"
-  repoURL: "Emmerson-Miranda/argocd.git"
+  repoGitURL: "Emmerson-Miranda/argocd.git"
+  repoHelmURL: "charts.deliveryhero.io/"
   path: "example-09/helmchart"
   targetRevision: "HEAD"
   environment: "dev"
