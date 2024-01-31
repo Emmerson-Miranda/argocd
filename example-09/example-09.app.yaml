@@ -1,21 +1,27 @@
-project: default
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: example-09-dev
-syncPolicy:
-  automated:
-    selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
-    - ApplyOutOfSyncOnly=true
-    - PrunePropagationPolicy=foreground
-sources:
-  - repoURL: deliveryhero
-    targetRevision: 1.4.1
-    helm:
-      valueFiles:
-        - ./example-09/environment-config/dev/values.yaml
-    chart: wiremock
-  - repoURL: https://github.com/Emmerson-Miranda/argocd.git
-    targetRevision: 'HEAD'
-    ref: values
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-09
+  namespace: example-09
+spec:
+  project: default
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: example-09-dev
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground
+  sources:
+    - repoURL: deliveryhero
+      targetRevision: 1.4.1
+      helm:
+        valueFiles:
+          - ./example-09/environment-config/dev/values.yaml
+      chart: wiremock
+    - repoURL: https://github.com/Emmerson-Miranda/argocd.git
+      targetRevision: 'HEAD'
+      ref: values
