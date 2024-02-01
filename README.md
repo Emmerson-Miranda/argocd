@@ -24,23 +24,21 @@ To download CLI follow instructions here https://argo-cd.readthedocs.io/en/stabl
 Open a new console to run the service
 ```bash
 minikube  service argocd-server -n argocd --url
+```
+```
 http://127.0.0.1:53208
 http://127.0.0.1:53209
 ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 ```
 
-Admin password
+Login
 
 ```bash
 argoPass=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 echo $argoPass
+argocd login --insecure --grpc-web 127.0.0.1:53208 --username admin --password $argoPass
 ```
-
-Login
-
-```bash
-$ argocd login --insecure --grpc-web 127.0.0.1:53208 --username admin --password $argoPass
+```
 'admin:login' logged in successfully
 Context '127.0.0.1:53208' updated
-$
 ```
