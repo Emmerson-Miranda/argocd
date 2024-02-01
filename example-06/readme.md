@@ -12,17 +12,17 @@ More info at:
 - https://github.com/argoproj/applicationset/tree/master/examples/git-generator-files-discovery
 
 
-Installation instructions
+## Installation instructions
 
 Creating
 
-```
+```bash
 kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-06/example-06.appset.yaml
 ```
 ![3 environments](./example-06.png)
 
 Deleting
 
-```
+```bash
 kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-06/example-06.appset.yaml
 ```

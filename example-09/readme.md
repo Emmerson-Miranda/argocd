@@ -1,6 +1,7 @@
 # Introduction
 PoC to deploy in multiple environments using ApplicationSet.
 
+- Create applications dynamically
 - Use an external Helm chart (wiremock)
 - Inject values into chart from a git repository
 
