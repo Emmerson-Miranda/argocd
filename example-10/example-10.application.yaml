@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-10
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Emmerson-Miranda/argocd.git
+    targetRevision: HEAD
+    path: example-10/manifests
+  destination:
+    server: https://192.168.64.1:8443
+    namespace: example-10
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground

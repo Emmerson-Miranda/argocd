@@ -8,7 +8,16 @@ ArgoCD Application CRD https://argoproj.github.io/argo-cd/operator-manual/applic
 
 https://argo-cd.readthedocs.io/en/release-2.0/getting_started/
 
-## Minikube Installation
+## Starting Minikube clusters
+
+```bash
+#minikube that contains ArgoCD installed
+minikube start --network default
+#target cluster to deploy
+minikube start -p othercluster --network default
+```
+
+## ArgoCD Installation in Minikube
 
 ```bash
 kubectl create ns argocd
@@ -41,4 +50,10 @@ argocd login --insecure --grpc-web 127.0.0.1:53208 --username admin --password $
 ```
 'admin:login' logged in successfully
 Context '127.0.0.1:53208' updated
+```
+
+Add a cluster to ArgoCD
+
+```bash
+argocd cluster add othercluster --insecure --upsert --in-cluster -y
 ```
