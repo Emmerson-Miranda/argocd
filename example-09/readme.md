@@ -1,11 +1,5 @@
 # Introduction
-PoC to deploy in multiple environments using ApplicationSet.
-
-- Create applications dynamically
-- Use an external Helm chart (wiremock)
-- Inject values into chart from a git repository
-
-The environment generation is dynamic and comes from a git repo.
+Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, use external *Helm chart*(wiremock) with *file values* and *with syncPolicy*. Inject values into chart from a Git repo.
 
 
 ## Installation instructions

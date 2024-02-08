@@ -1,7 +1,24 @@
-# ArgoCD
-ArgoCD examples, latest test with "Version": "v2.9.0+4e084ac"
+# ArgoCD Examples "v2.9.0+4e084ac"
+ArgoCD examples, starting from most basic to medium complexity.
 
 ArgoCD Application CRD https://argoproj.github.io/argo-cd/operator-manual/application.yaml
+
+List of examples:
+
+Examples from 01 to 09 uses Minikube. Example 10 uses KinD.
+
+| Example | Description                                            |
+|-----|--------------------------------------------------------|
+| [01](./example-01/readme.md) | Simple argo *Application* deploying using *basic k8s manifests*.               |
+| [02](./example-02/readme.md) | Simple argo *Application* deploying using basic *Helm charts* without parameters and *without syncPolicy*. Uses Helm Chart source code from *git*.              |
+| [03](./example-03/readme.md) | Simple argo *Application* deploying using basic *Helm charts* without parameters and *with syncPolicy*. Uses Helm Chart source code from *git*.    |
+| [04](./example-04/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, static *list generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*.   |
+| [05](./example-05/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*.   |
+| [06](./example-06/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Overrides parameters per environment.   |
+| [07](./example-07/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *file values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Inject values into chart from a Git repo.  |
+| [08](./example-08/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *file values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Inject values into chart from an *https source*.   |
+| [09](./example-09/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, use external *Helm chart*(wiremock) with *file values* and *with syncPolicy*. Inject values into chart from a Git repo.   |
+| [10](./example-10/readme.md) | Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster using CLI* and creates a *new project declaratively*. This example create two K8S clusters with *KinD*.  |
 
 
 ## Installation
@@ -50,10 +67,4 @@ argocd login --insecure --grpc-web 127.0.0.1:53208 --username admin --password $
 ```
 'admin:login' logged in successfully
 Context '127.0.0.1:53208' updated
-```
-
-Add a cluster to ArgoCD
-
-```bash
-argocd cluster add othercluster --insecure --upsert --in-cluster -y
 ```

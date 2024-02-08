@@ -1,5 +1,5 @@
 # Introduction
-PoC to deploy in multiple environments using ApplicationSet, Helm and overriding some values per environment.
+Deploy in multiple environments. Uses *ApplicationSet*, static *list generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*.
 
 More info at: 
 - https://argo-cd.readthedocs.io/en/stable/user-guide/application-set/

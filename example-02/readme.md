@@ -1,5 +1,5 @@
 # Introduction
-Simple PoC to deploy some containers using very basic helmcharts.
+Simple argo 'application' deploying using basic *Helm charts* without parameters and *without syncPolicy*. Uses Helm Chart source code from *git*.
 
 More info at: 
 - https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook

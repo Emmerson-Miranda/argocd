@@ -1,9 +1,8 @@
 # Introduction
-Simple PoC to deploy some containers using basic helmcharts and a dynamic list of containers given in the values.yaml.
+Simple argo 'application' deploying using basic *Helm charts* without parameters and *with syncPolicy*. Uses Helm Chart source code from *git*. 
 
 More info at: 
 - https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
-
 
 
 Installation instructions

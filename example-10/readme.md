@@ -1,5 +1,5 @@
 # Introduction
-Simple PoC to deploy argoCD application in a remote cluster.
+Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster using CLI* and creates a *new project declaratively*. This example create two K8S clusters with KinD.
 
 - Create two kubernetes cluster using KinD (argocd-cluster and application-cluster)
 

@@ -1,11 +1,5 @@
 # Introduction
-PoC to deploy in multiple environments using ApplicationSet, Helm and overriding some values per environment.
-
-- Create applications dynamically
-- Run helm chart from a git repository
-- Inject values into chart from an external HTTP sources
-
-The environment generation is dynamic and comes from a git repo.
+Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *file values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Inject values into chart from an *https source*. 
 
 
 ## Installation instructions

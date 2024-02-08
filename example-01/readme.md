@@ -1,5 +1,5 @@
 # Introduction
-Simple PoC to deploy some containers from the most basic manifest files.
+Simple argo 'application' deploying using basic k8s manifests.
 
 Installation instructions
 
