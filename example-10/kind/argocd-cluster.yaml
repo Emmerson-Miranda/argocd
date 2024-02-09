@@ -14,3 +14,8 @@ networking:
 nodes:
 - role: control-plane
 - role: worker
+  extraPortMappings:
+  - containerPort: 30080
+    hostPort: 30080
+  - containerPort: 30443
+    hostPort: 30443
