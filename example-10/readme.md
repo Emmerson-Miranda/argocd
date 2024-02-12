@@ -1,5 +1,5 @@
 # Introduction
-Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster using CLI* and creates a *new project declaratively*. This example create two K8S clusters with KinD.
+Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster* and creates a *new project declaratively*. This example create two K8S clusters with *KinD*.
 
 - Create two kubernetes cluster using KinD (argocd-cluster and application-cluster)
 
@@ -55,4 +55,135 @@ Script will use 30080 and 30443 ports on your localhost.
 
 ```bash
 ./clusters-destroy.sh
+```
+
+
+## ArgoCD in External cluster
+
+When register a new cluster in ArgoCD it connects to it and generate following objects by default.
+
+**ServiceAccount argocd-manager**
+
+```bash
+kubectl get sa argocd-manager -o yaml -n kube-system
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2024-02-11T09:57:34Z"
+  name: argocd-manager
+  namespace: kube-system
+  resourceVersion: "653"
+  uid: 3dabe7d7-798d-4040-abde-755aaadfa2e2
+secrets:
+- name: argocd-manager-token-8t8m9
+```
+
+***Secret argocd-manager-token-8t8m9***
+
+```bash
+kubectl get secret  argocd-manager-token-8t8m9 -o yaml -n kube-system
+
+apiVersion: v1
+data:
+  ca.crt: LS0t... client-certificate-data inside kubeconfig file ...FLS0tLS0K
+  namespace: a3ViZS1zeXN0ZW0=   # kube-system
+  token: ZXlKa...zUXFveXc=
+kind: Secret
+metadata:
+  annotations:
+    kubernetes.io/service-account.name: argocd-manager
+    kubernetes.io/service-account.uid: 3dabe7d7-798d-4040-abde-755aaadfa2e2
+  creationTimestamp: "2024-02-11T09:57:39Z"
+  generateName: argocd-manager-token-
+  name: argocd-manager-token-8t8m9
+  namespace: kube-system
+  resourceVersion: "654"
+  uid: 689c94ac-f107-4bd7-ad72-4ec6d78cdf79
+type: kubernetes.io/service-account-token
+```
+
+**ClusterRole argocd-manager-role**
+
+```bash
+kubectl get ClusterRole argocd-manager-role -o yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2024-02-11T09:57:34Z"
+  name: argocd-manager-role
+  resourceVersion: "642"
+  uid: 6ac20f76-1f8d-40f1-ba35-e07cbea95b53
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - '*'
+```
+
+**ClusterRoleBinding argocd-manager-role-binding**
+
+```bash
+kubectl get ClusterRoleBinding argocd-manager-role-binding -o yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2024-02-11T09:57:34Z"
+  name: argocd-manager-role-binding
+  resourceVersion: "643"
+  uid: 654f4c0a-083a-43f8-922c-9bc9e915b866
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-manager-role
+subjects:
+- kind: ServiceAccount
+  name: argocd-manager
+  namespace: kube-system
+```
+
+### On ArgoCD cluster
+ArgoCD create a secret per cluster to store the credentials to access to external cluster. 
+
+```bash
+kubectl get secrets "cluster-192.168.64.1-2102044685"  -n argocd -o yaml
+
+apiVersion: v1
+data:
+  config: ... base64 encoded ...                # text explained in the next section
+  name: a2luZC1hcHBsaWNhdGlvbi1jbHVzdGVy        # kind-application-cluster
+  server: aHR0cHM6Ly8xOTIuMTY4LjY0LjE6ODQ0Mw==  # https://192.168.64.1:8443
+kind: Secret
+metadata:
+  annotations:
+    managed-by: argocd.argoproj.io
+  creationTimestamp: "2024-02-11T09:57:40Z"
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+  name: cluster-192.168.64.1-2102044685
+  namespace: argocd
+  resourceVersion: "885"
+  uid: 3cd9fae0-b284-494a-92ae-d3c91addde9f
+type: Opaque
+```
+
+**The data.config explained**
+
+Is a json value base64 encoded with following relevant properties:
+- certData : Is *client-certificate-data* as-is inside *kubeconfig* for *kind-application-cluster*.
+- keyData : Is *client-key-data* as-is inside *kubeconfig* for *kind-application-cluster*.
+- caData: Is *certificate-authority-data* as-is inside *kubeconfig* for *kind-application-cluster*.
+
+```bash
+kubectl get secrets "cluster-192.168.64.1-2102044685"  -n argocd -o yaml | yq .data.config | base64 -d
+
+{"tlsClientConfig":{"insecure":false,"certData":"...","keyData":"...","caData":"..."}}
 ```

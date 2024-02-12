@@ -10,10 +10,7 @@ kubectl create ns argocd
 kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml -n argocd
 
 # changing svc to NodePort and setting ports to 30080 and 30443
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
-kubectl patch svc argocd-server -n argocd --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30080}]'
-kubectl patch svc argocd-server -n argocd --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/1/nodePort","value":30443}]'
-
+kubectl patch svc argocd-server -n argocd --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30080},{"op":"replace","path":"/spec/ports/1/nodePort","value":30443}]'
 
 echo "Waiting for argocd-server pod to be ready $(date)"
 kubectl wait po  -l app.kubernetes.io/name=argocd-server --for=condition=Ready -n argocd
@@ -35,13 +32,23 @@ do
         echo 'Login succeeded'
         break
     else
-        echo "Login $i failed, sleeping 10 secs"
+        echo "Login $i failed, sleeping 10 secs"|
         sleep 10
     fi
 done
 
 # REGISTERING a new cluster into ARGO using CLI
-argocd cluster add kind-application-cluster -y
+# argocd cluster add kind-application-cluster -y
+
+# REGISTERING a new cluster into ARGO DECLARATIVELY
+caData=$(cat ~/.kube/config | yq '.clusters[] | select(.name=="kind-application-cluster") | .cluster.certificate-authority-data')
+#echo $caData
+certData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-certificate-data')
+#echo $certData
+keyData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-key-data')
+#echo $keyData
+cat example-10.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" > example-10.cluster.yaml
+kubectl apply -f example-10.cluster.yaml
 
 # CREATING A NEW ARGO PROJECT DECLARATIVELY
 kubectl apply -f example-10.appproject.yaml  

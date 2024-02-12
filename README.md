@@ -18,7 +18,7 @@ Examples from 01 to 09 uses Minikube. Example 10 uses KinD.
 | [07](./example-07/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *file values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Inject values into chart from a Git repo.  |
 | [08](./example-08/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *file values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Inject values into chart from an *https source*.   |
 | [09](./example-09/readme.md) | Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, use external *Helm chart*(wiremock) with *file values* and *with syncPolicy*. Inject values into chart from a Git repo.   |
-| [10](./example-10/readme.md) | Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster using CLI* and creates a *new project declaratively*. This example create two K8S clusters with *KinD*.  |
+| [10](./example-10/readme.md) | Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster* and creates a *new project declaratively*. This example create two K8S clusters with *KinD*.  |
 
 
 ## Installation

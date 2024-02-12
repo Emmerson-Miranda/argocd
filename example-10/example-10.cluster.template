@@ -2,17 +2,19 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mycluster-secret
+  namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: cluster
 type: Opaque
 stringData:
-  name: othercluster
-  server: https://127.0.0.1:62390
+  name: kind-application-cluster
+  server: https://192.168.64.1:8443
   config: |
     {
-      "bearerToken": "<authentication token>",
       "tlsClientConfig": {
         "insecure": false,
-        "caData": "<base64 encoded certificate>"
+        "certData": "PLACEHOLDER_CERT_DATA",
+        "keyData": "PLACEHOLDER_KEY_DATA",
+        "caData": "PLACEHOLDER_CA_DATA"
       }
     }
