@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: PLACEHOLDER_SECRET-secret
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+    type: applications
+type: Opaque
+stringData:
+  name: "PLACEHOLDER_CLUSTER_NAME"
+  server: "PLACEHOLDER_SERVER"
+  config: |
+    {
+      "tlsClientConfig": {
+        "insecure": false,
+        "certData": "PLACEHOLDER_CERT_DATA",
+        "keyData": "PLACEHOLDER_KEY_DATA",
+        "caData": "PLACEHOLDER_CA_DATA"
+      }
+    }
