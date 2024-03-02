@@ -47,6 +47,7 @@ done
 # REGISTERING a new cluster into ARGO DECLARATIVELY
 register_cluster_in_argo(){
     context="${1}"
+    environment="${2}"
     echo "Registering cluster: $context"
 
     expr=".clusters[] | select(.name==\"$context\") | .cluster.server"
@@ -64,6 +65,7 @@ register_cluster_in_argo(){
     cat example-11.cluster.template.yaml | \
     sed "s/PLACEHOLDER_SECRET/$context/" | \
     sed "s/PLACEHOLDER_CLUSTER_NAME/$context/" | \
+    sed "s/PLACEHOLDER_ENVIRONMENT/$environment/" | \
     sed "s/PLACEHOLDER_SERVER/$server/" | \
     sed "s/PLACEHOLDER_CERT_DATA/$certData/" | \
     sed "s/PLACEHOLDER_KEY_DATA/$keyData/" | \
@@ -71,9 +73,9 @@ register_cluster_in_argo(){
     kubectl apply -f example-11.$context.cluster.yaml
 }
 
-register_cluster_in_argo "kind-ci-cluster"
-register_cluster_in_argo "kind-uat-cluster"
-register_cluster_in_argo "kind-prod-cluster"
+register_cluster_in_argo "kind-ci-cluster" "ci"
+register_cluster_in_argo "kind-uat-cluster" "uat"
+register_cluster_in_argo "kind-prod-cluster" "prod"
 
 
 # DEPLOYING ARGO APP

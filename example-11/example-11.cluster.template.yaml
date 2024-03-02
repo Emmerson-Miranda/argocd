@@ -6,6 +6,8 @@ metadata:
   labels:
     argocd.argoproj.io/secret-type: cluster
     type: applications
+    name: "PLACEHOLDER_CLUSTER_NAME"
+    env: "PLACEHOLDER_ENVIRONMENT"
 type: Opaque
 stringData:
   name: "PLACEHOLDER_CLUSTER_NAME"
