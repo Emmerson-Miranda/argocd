@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: wiremock-matrix
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    # matrix 'parent' generator
+    - matrix:
+        generators:
+          # git generator, 'child' #1
+          - git:
+                repoURL: https://github.com/Emmerson-Miranda/argocd.git
+                revision: HEAD
+                files:
+                - path: "example-11/config/**/config.yaml"
+          - clusters: # Automatically use all clusters defined within Argo CD
+              selector:
+                matchLabels: # below condition avoid deploy apps in same cluster as argo (in-cluster)
+                  type: applications # injected when we register the secret
+  template:
+    metadata:
+      name: 'wiremock-matrix-{{.name}}' # 'name' field of the Secret
+    spec:
+      project: 'default'
+      sources:
+      - helm:
+          valueFiles:
+            - $values/{{.path.path}}/values.yaml
+        chart: wiremock
+        repoURL: https://charts.deliveryhero.io/
+        targetRevision: 1.4.1
+      - repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        targetRevision: HEAD
+        ref: values
+      destination:
+        server: '{{.server}}'
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - PrunePropagationPolicy=foreground

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: guestbook
+  name: guestbook-cluster
   namespace: argocd
 spec:
   goTemplate: true
@@ -13,7 +13,7 @@ spec:
           type: applications # injected when we register the secret
   template:
     metadata:
-      name: '{{.name}}-guestbook' # 'name' field of the Secret
+      name: 'guestbook-cluster-{{.name}}' # 'name' field of the Secret
     spec:
       project: "default"
       source:

@@ -5,6 +5,7 @@
 kind create cluster --config ./kind/10-tooling-cluster.yaml
 kind create cluster --config ./kind/20-ci-cluster.yaml
 kind create cluster --config ./kind/30-uat-cluster.yaml
+kind create cluster --config ./kind/40-prod-cluster.yaml
 
 # DEPLOYING ARGOCD
 kubectl config use-context kind-tooling-cluster
@@ -60,7 +61,7 @@ register_cluster_in_argo(){
     expr=".users[] | select(.name==\"$context\") | .user.client-key-data"
     keyData=$(cat ~/.kube/config | yq "$expr")
     
-    cat example-11.cluster.template | \
+    cat example-11.cluster.template.yaml | \
     sed "s/PLACEHOLDER_SECRET/$context/" | \
     sed "s/PLACEHOLDER_CLUSTER_NAME/$context/" | \
     sed "s/PLACEHOLDER_SERVER/$server/" | \
@@ -72,10 +73,12 @@ register_cluster_in_argo(){
 
 register_cluster_in_argo "kind-ci-cluster"
 register_cluster_in_argo "kind-uat-cluster"
+register_cluster_in_argo "kind-prod-cluster"
 
 
 # DEPLOYING ARGO APP
-kubectl apply -f example-11.applicationset.yaml 
+# kubectl apply -f example-11.clustergenerator.yaml 
+# kubectl apply -f example-11.matrixgenerator.yaml 
 
 open -a firefox -g https://localhost:30443/settings/clusters
 
