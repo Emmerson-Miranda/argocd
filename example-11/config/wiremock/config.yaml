@@ -1,8 +1,9 @@
 config:
-  project: "default"
+  argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
+  repoGitTargetRevision: "HEAD"
   repoHelmURL: "charts.deliveryhero.io/"
-  targetRevision: "HEAD"
+  repoHelmTargetRevision: "1.4.1"
   environments: 
   - "ci"
   - "uat"
