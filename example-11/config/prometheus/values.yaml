@@ -1,0 +1,5 @@
+---
+server:
+  ## Prometheus server container name
+  ##
+  name: server-example-11

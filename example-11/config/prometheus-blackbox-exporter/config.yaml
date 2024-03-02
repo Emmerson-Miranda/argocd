@@ -1,0 +1,15 @@
+config:
+  enabled: false
+  argoProject: "default"
+  # https://artifacthub.io/packages/helm/prometheus-community/prometheus-blackbox-exporter
+  repoGitURL: "Emmerson-Miranda/argocd.git"
+  repoGitTargetRevision: "HEAD"
+  repoHelmURL: "https://prometheus-community.github.io/helm-charts/"
+  repoHelmChart: "prometheus-community/prometheus-blackbox-exporter"
+  repoHelmTargetRevision: "8.12.0"
+  environments: 
+  - "ci"
+  - "uat"
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"

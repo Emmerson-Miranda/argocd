@@ -1,0 +1,10 @@
+---
+#helm show values prometheus-community/prometheus-blackbox-exporter
+pod:
+  labels: 
+    example: example-11 
+
+extraArgs:
+  - --history.limit=10
+
+replicas: 1

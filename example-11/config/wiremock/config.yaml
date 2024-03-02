@@ -1,8 +1,11 @@
 config:
+  enabled: true
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
   repoGitTargetRevision: "HEAD"
-  repoHelmURL: "charts.deliveryhero.io/"
+  # https://artifacthub.io/packages/helm/deliveryhero/wiremock
+  repoHelmURL: "https://charts.deliveryhero.io/"
+  repoHelmChart: "wiremock"
   repoHelmTargetRevision: "1.4.1"
   environments: 
   - "ci"
