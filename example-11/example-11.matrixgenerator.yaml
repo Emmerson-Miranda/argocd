@@ -16,6 +16,12 @@ spec:
                 revision: HEAD
                 files:
                 - path: "example-11/config/**/config.yaml"
+                values: 
+                  argoProject: '{{ .config.argoProject }}'
+                  repoHelmURL: '{{ .config.repoHelmURL }}'
+                  repoHelmTargetRevision: '{{ .config.repoHelmTargetRevision }}'
+                  repoGitURL: '{{ .config.repoGitURL }}'
+                  repoGitTargetRevision: '{{ .config.repoGitTargetRevision }}'
           - clusters: # Automatically use all clusters defined within Argo CD
               selector:
                 matchLabels: # below condition avoid deploy apps in same cluster as argo (in-cluster)
@@ -24,16 +30,16 @@ spec:
     metadata:
       name: 'wiremock-matrix-{{.name}}' # 'name' field of the Secret
     spec:
-      project: 'default'
+      project: '{{ .values.argoProject }}'
       sources:
       - helm:
           valueFiles:
-            - $values/{{.path.path}}/values.yaml
+            - $values/{{.path.path}}/values.yaml # same folder as config.yaml loaded
         chart: wiremock
-        repoURL: https://charts.deliveryhero.io/
-        targetRevision: 1.4.1
-      - repoURL: https://github.com/Emmerson-Miranda/argocd.git
-        targetRevision: HEAD
+        repoURL: https://{{ .values.repoHelmURL }}
+        targetRevision: '{{ .values.repoHelmTargetRevision }}'
+      - repoURL: https://github.com/{{ .values.repoGitURL }}
+        targetRevision: '{{ .values.repoGitTargetRevision }}'
         ref: values
       destination:
         server: '{{.server}}'
