@@ -1,5 +1,6 @@
 config:
   enabled: 'false'
+  componentName: 'blackbox-exporter'
   argoProject: "default"
   # https://artifacthub.io/packages/helm/prometheus-community/prometheus-blackbox-exporter
   repoGitURL: "Emmerson-Miranda/argocd.git"
