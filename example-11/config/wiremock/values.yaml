@@ -1,0 +1,7 @@
+---
+nameOverride: "wiremockNameOverrideValue"
+fullnameOverride: "wiremockFullnameOverrideValue"
+environment:
+  replicas: 1
+hpa:
+  minpods: 1

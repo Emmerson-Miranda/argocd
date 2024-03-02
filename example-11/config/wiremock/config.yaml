@@ -1,0 +1,11 @@
+config:
+  project: "default"
+  repoGitURL: "Emmerson-Miranda/argocd.git"
+  repoHelmURL: "charts.deliveryhero.io/"
+  targetRevision: "HEAD"
+  environments: 
+  - "ci"
+  - "uat"
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"
