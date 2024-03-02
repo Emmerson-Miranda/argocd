@@ -1,5 +1,5 @@
 config:
-  enabled: false
+  enabled: 'false'
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
   repoGitTargetRevision: "HEAD"
