@@ -80,7 +80,7 @@ register_cluster_in_argo "kind-prod-cluster" "prod"
 
 # DEPLOYING ARGO APP
 # kubectl apply -f example-11.clustergenerator.yaml 
-# kubectl apply -f example-11.matrixgenerator.yaml 
+kubectl apply -f example-11.matrixgenerator.yaml 
 
 open -a firefox -g https://localhost:30443/settings/clusters
 
