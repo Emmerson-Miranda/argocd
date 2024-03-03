@@ -8,6 +8,9 @@ metadata:
     type: applications
     name: "PLACEHOLDER_CLUSTER_NAME"
     env: "PLACEHOLDER_ENVIRONMENT"
+  annotations:
+    name: "PLACEHOLDER_CLUSTER_NAME"
+    env: "PLACEHOLDER_ENVIRONMENT"
 type: Opaque
 stringData:
   name: "PLACEHOLDER_CLUSTER_NAME"
