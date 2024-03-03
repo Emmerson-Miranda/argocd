@@ -1,0 +1,12 @@
+deploy: "true"
+config:
+  componentName: "nginx-ingress"
+  argoProject: "default"
+  repoGitURL: "Emmerson-Miranda/argocd.git"
+  repoGitTargetRevision: "HEAD"
+  repoHelmURL: "https://helm.nginx.com/stable"
+  repoHelmChart: "nginx-ingress"
+  repoHelmTargetRevision: "1.1.3"
+  syncPolicy:
+    syncOptions:
+      ApplyOutOfSyncOnly: "true"
