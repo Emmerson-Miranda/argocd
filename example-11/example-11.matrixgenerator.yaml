@@ -37,7 +37,7 @@ spec:
                 - {key: type, operator: In, values: ["applications"]}
   template:
     metadata:
-      name: 'matrix-{{.config.componentName}}-{{.name}}' # 'name' field of the Secret
+      name: '{{.config.componentName}}-{{.name}}' # 'name' field of the Secret
       labels:
         pathDefaultValue: '{{default (index .path "0") "not-specified"}}' # https://masterminds.github.io/sprig/defaults.html
         path0: '{{index .path.segments 0}}' # https://github.com/argoproj/argo-cd/issues/12502
