@@ -1,4 +1,4 @@
-deploy: "false"
+deploy: "true"
 config:
   componentName: "prometheus"
   argoProject: "default"
