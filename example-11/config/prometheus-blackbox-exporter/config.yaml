@@ -1,4 +1,4 @@
-deploy: "true"
+deploy: "false"
 config:
   componentName: "blackbox-exporter"
   argoProject: "default"

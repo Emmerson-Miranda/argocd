@@ -1,12 +1,12 @@
-deploy: "false"
+deploy: "true"
 config:
   componentName: "prometheus"
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
   repoGitTargetRevision: "HEAD"
   # https://artifacthub.io/packages/helm/prometheus-community/prometheus
-  repoHelmURL: "https://prometheus-community.github.io/helm-charts/prometheus-community/"
-  repoHelmChart: "prometheus"
+  repoHelmURL: "https://prometheus-community.github.io/"
+  repoHelmChart: "prometheus-community/prometheus"
   repoHelmTargetRevision: "25.16.0"
   syncPolicy:
     syncOptions:
