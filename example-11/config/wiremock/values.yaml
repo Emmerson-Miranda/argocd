@@ -1,7 +1,4 @@
 ---
 nameOverride: "wiremock-name-override"
 fullnameOverride: "wiremock-fullname-override"
-environment:
-  replicas: 1
-hpa:
-  minpods: 1
+replicas: 1
