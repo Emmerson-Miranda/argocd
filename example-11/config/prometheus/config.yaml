@@ -1,5 +1,5 @@
+deploy: "false"
 config:
-  enabled: "false"
   componentName: "prometheus"
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"

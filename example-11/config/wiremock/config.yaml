@@ -1,5 +1,5 @@
+deploy: "true"
 config:
-  enabled: "true"
   componentName: "wiremock"
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
