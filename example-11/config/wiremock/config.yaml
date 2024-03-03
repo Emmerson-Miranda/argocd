@@ -1,6 +1,6 @@
 config:
-  enabled: 'true'
-  componentName: 'wiremock'
+  enabled: "true"
+  componentName: "wiremock"
   argoProject: "default"
   repoGitURL: "Emmerson-Miranda/argocd.git"
   repoGitTargetRevision: "HEAD"
