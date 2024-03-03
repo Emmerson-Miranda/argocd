@@ -1,16 +1,10 @@
 deploy: "false"
-environments: 
-  - "ci"
-  - "uat"
-environmentsv2: 
-  ci: "true"
-  uat": "true"
 config:
   componentName: "blackbox-exporter"
   argoProject: "default"
-  # https://artifacthub.io/packages/helm/prometheus-community/prometheus-blackbox-exporter
   repoGitURL: "Emmerson-Miranda/argocd.git"
   repoGitTargetRevision: "HEAD"
+  # https://artifacthub.io/packages/helm/prometheus-community/prometheus-blackbox-exporter
   repoHelmURL: "https://prometheus-community.github.io/helm-charts/"
   repoHelmChart: "prometheus-community/prometheus-blackbox-exporter"
   repoHelmTargetRevision: "8.12.0"

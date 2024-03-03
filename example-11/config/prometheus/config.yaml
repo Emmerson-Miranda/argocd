@@ -1,10 +1,4 @@
 deploy: "true"
-environments: 
-  - "ci"
-  - "uat"
-environmentsv2: 
-  ci: "true"
-  uat": "true"
 config:
   componentName: "prometheus"
   argoProject: "default"
