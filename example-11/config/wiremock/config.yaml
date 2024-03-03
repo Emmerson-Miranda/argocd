@@ -1,4 +1,7 @@
 deploy: "true"
+environments: 
+  - "ci"
+  - "uat"
 config:
   componentName: "wiremock"
   argoProject: "default"
@@ -8,9 +11,6 @@ config:
   repoHelmURL: "https://charts.deliveryhero.io/"
   repoHelmChart: "wiremock"
   repoHelmTargetRevision: "1.4.1"
-  environments: 
-  - "ci"
-  - "uat"
   syncPolicy:
     syncOptions:
       ApplyOutOfSyncOnly: "true"

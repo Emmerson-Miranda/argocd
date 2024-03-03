@@ -1,4 +1,7 @@
 deploy: "true"
+environments: 
+  - "ci"
+  - "uat"
 config:
   componentName: "prometheus"
   argoProject: "default"
@@ -8,9 +11,6 @@ config:
   repoHelmURL: "https://prometheus-community.github.io/helm-charts/"
   repoHelmChart: "prometheus-community/prometheus"
   repoHelmTargetRevision: "25.16.0"
-  environments: 
-  - "ci"
-  - "uat"
   syncPolicy:
     syncOptions:
       ApplyOutOfSyncOnly: "true"
