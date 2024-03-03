@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: wiremock-matrix
+  name: components
   namespace: argocd
 spec:
   goTemplate: true
@@ -24,16 +24,17 @@ spec:
                 repoHelmTargetRevision: '{{ .config.repoHelmTargetRevision }}'
                 repoGitURL: '{{ .config.repoGitURL }}'
                 repoGitTargetRevision: '{{ .config.repoGitTargetRevision }}'
-                targetClusters: '{{ .config.environments }}'
             selector:
               matchExpressions:
                 - {key: deploy, operator: In, values: ["true"]}
                 #- {key: deploy, operator: Exists}
           # clusters generator, 'child' #2
           - clusters: # Automatically use all clusters defined within Argo CD
+              #values:
+              #  e: '{{index .metadata.labels "env" }}'
               selector:
-                matchLabels: # below condition avoid deploy apps in same cluster as argo (in-cluster)
-                  type: applications # injected when we register the secret
+                matchExpressions:
+                - {key: type, operator: In, values: ["applications"]}
   template:
     metadata:
       name: 'matrix-{{.config.componentName}}-{{.name}}' # 'name' field of the Secret
@@ -43,12 +44,13 @@ spec:
         path1: '{{index .path.segments 1}}' 
         path2: '{{index .path.segments 2}}' 
         filename: '{{.path.filenameNormalized}}'
-        envs: '{{.config.environments | join "_"}}'
+        env: '{{index .metadata.labels "env" }}'
     spec:
       project: '{{ .values.argoProject }}'
       sources:
       - helm:
           valueFiles:
+            - $values/{{index .path.segments 0}}/{{index .path.segments 1}}/{{.name}}-values.yaml 
             - $values/{{.path.path}}/values.yaml # same folder as config.yaml loaded
         chart: '{{ .values.repoHelmChart }}'
         repoURL: '{{ .values.repoHelmURL }}'
