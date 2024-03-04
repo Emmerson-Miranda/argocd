@@ -19,7 +19,7 @@ example-11
 
 
 ## Git generator configuration
-The applicationSet **example-11.matrixgenerator.yaml** reads reads and generate as many application are defined in the config folder.
+The applicationSet **[example-11.matrixgenerator.yaml](./example-11.matrixgenerator.yaml)** reads reads and generate as many application are defined in the config folder.
 ```yaml
 - path: "example-11/config/**/config.yaml"
 ```
@@ -69,7 +69,7 @@ CURRENT   NAME                   CLUSTER                AUTHINFO               N
           kind-uat-cluster       kind-uat-cluster       kind-uat-cluster       
 ```
 
-When a cluster is registred in ArgoCD some labels and annotations are added.
+When a cluster is registred in ArgoCD some labels and annotations are added (see **[example-11.cluster.template.yaml](./example-11.cluster.template.yaml)**).
 ![cluster labels and annotations](./img/cluster.png)
 
 
