@@ -3,3 +3,4 @@ example-10/example-10.cluster.yaml
 example-11/example-11.kind-ci-cluster.cluster.yaml
 example-11/example-11.kind-uat-cluster.cluster.yaml
 example-11/example-11.kind-prod-cluster.cluster.yaml
+.DS_Store
