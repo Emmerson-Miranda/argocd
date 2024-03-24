@@ -63,6 +63,7 @@ data:
     uid: dmiranda
     uidnumber: 1001
     userpassword: {MD5}cfJrbp5Z+3onu8lj8L91Dg==
+    mail: dmiranda@example.org
 
     # Entry 7: cn=emiranda,ou=people,dc=example,dc=org
     dn: cn=emiranda,ou=people,dc=example,dc=org
@@ -77,6 +78,7 @@ data:
     uid: emiranda
     uidnumber: 1000
     userpassword: {MD5}fRBe1YlTtJul0WtDF4xWUA==
+    mail: emiranda@example.org
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -163,6 +165,11 @@ spec:
               containerPort: 389
             - name: tcp-ldap2
               containerPort: 636
+          startupProbe:
+            exec:
+              command: ["/bin/sh", "-c", "ldapadd -x -H ldap://127.0.0.1:389  -D 'cn=admin,dc=example,dc=org' -w $LDAP_ADMIN_PASSWORD -f /ldif/users.ldif"]
+            failureThreshold: 60
+            periodSeconds: 5
       volumes:
         - name: ldifs-volume
           configMap:
@@ -213,6 +220,9 @@ spec:
     - name: tcp-ldap
       port: 389
       targetPort: tcp-ldap
+    - name: tcp-ldap2
+      port: 636
+      targetPort: tcp-ldap2
   selector:
     app.kubernetes.io/name: openldap
 ---

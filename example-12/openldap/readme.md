@@ -26,7 +26,7 @@ kubectl exec -ti $(kubectl get po -l app.kubernetes.io/name=openldap -o=jsonpath
 
 ## Verify all entries below your base DN (See groups, users, OUs, etc.)
 ```bash
-ldapsearch -x -H ldap://127.0.0.1:389 -D "cn=admin,dc=example,dc=org" -W -b "dc=example,dc=org" -s sub "(objectclass=*)"
+ldapsearch -x -H ldap://127.0.0.1:389 -D "cn=admin,dc=example,dc=org" -w admin -b "dc=example,dc=org" -s sub "(objectclass=*)"
 ```
 
 
@@ -34,6 +34,12 @@ ldapsearch -x -H ldap://127.0.0.1:389 -D "cn=admin,dc=example,dc=org" -W -b "dc=
 
 ```bash
 ldapsearch -x -H ldap://127.0.0.1:389 -D "cn=admin,dc=example,dc=org" -W -b "dc=example,dc=org" -s sub "(objectclass=inetOrgPerson)"
+```
+
+## View groups
+
+```bash
+ldapsearch -x -H ldap://127.0.0.1:389 -D "cn=admin,dc=example,dc=org" -W -b "dc=example,dc=org" -s sub "(objectclass=organizationalUnit)"
 ```
 
 ## Hashing your password to place in password field of your ldif file:
@@ -45,7 +51,8 @@ slappasswd -s yourpassword
 ## LDIF Add objects
 
 ```bash
-ldapadd -x -H ldap://127.0.0.1:389  -D "cn=admin,dc=example,dc=org" -W -f /ldif/users.ldif
+# "-w admin" is the password for user admin
+ldapadd -x -H ldap://127.0.0.1:389  -D "cn=admin,dc=example,dc=org" -w admin -f /ldif/users.ldif
 ```
 Output:
 ```
