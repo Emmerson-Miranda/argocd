@@ -21,7 +21,6 @@ Username and Password are environment variables:
 
 ```bash
 open -a firefox -g https://phpldapadmin.owl.com
-open -a firefox -g https://argocd.owl.com
 ```
 
 ## ArgoCD UI
