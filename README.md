@@ -21,7 +21,7 @@ Examples from 01 to 09 uses Minikube. Example 10 uses KinD.
 | [10](./example-10/readme.md) | Based on example [01](./example-01/readme.md) . Deploy into a *remote cluster*. Register *cluster* and creates a *new project declaratively*. This example create two K8S clusters with *KinD*.  |
 | [11](./example-11/readme.md) | Based on example [10](./example-10/readme.md) . More advanced example were argo deploy dinamically in multiple applications in multiple clusters using selectors to exclude applications and clusters.  |
 | [12](./example-12/readme.md) | Integrate ArgoCD with OpenLDAP.  |
-
+| [13](./example-13/readme.md) | Integrate ArgoCD with Hashicorp Vault.  |
 
 ## Installation
 
