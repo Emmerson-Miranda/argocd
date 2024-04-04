@@ -35,8 +35,10 @@ kubectl -n vault exec vault-0 -- vault kv put kv-v2/my-secrets/secret1 username=
 
 
 # INSTALL ArgoCD
+cat ./values/argo-cd-values.yaml | sed "s/VAULT_TOKEN_PLACEHOLDER/$roottoken/" > ./tmp/argo-cd-values.yaml 
+
 helm repo add argo-cd https://argoproj.github.io/argo-helm
-helm upgrade argocd argo-cd/argo-cd -i -n argocd -f values/argo-cd-values.yaml --create-namespace
+helm upgrade argocd argo-cd/argo-cd -i -n argocd -f tmp/argo-cd-values.yaml --create-namespace
 sleep 15
 kubectl wait po  -l app.kubernetes.io/name=argocd-server --for=condition=Ready -n argocd --timeout=60s
 

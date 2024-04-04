@@ -85,7 +85,7 @@ repoServer:
         - name: VAULT_ADDR
           value: http://vault.vault.svc.cluster.local
         - name: VAULT_TOKEN
-          value: <VAULT_TOKEN_PLACEHOLDER>
+          value: VAULT_TOKEN_PLACEHOLDER
         - name: AVP_TYPE
           value: vault
         - name: AVP_AUTH_TYPE
