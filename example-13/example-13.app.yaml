@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-13
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Emmerson-Miranda/argocd.git
+    targetRevision: HEAD
+    path: example-13/helmchart
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: example-13
