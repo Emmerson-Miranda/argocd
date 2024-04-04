@@ -17,12 +17,12 @@ helm upgrade vault hashicorp/vault -i -n vault -f values/hashicorp-vault-values.
 sleep 15
 kubectl wait po  -l app.kubernetes.io/name=vault --for=condition=Ready -n vault --timeout=60s
 
-kubectl -n vault exec vault-0 -- vault operator init > vault-operator-init.txt
-key1=$(cat vault-operator-init.txt | grep "Unseal Key 1" | cut -d' ' -f4-)
-key2=$(cat vault-operator-init.txt | grep "Unseal Key 2" | cut -d' ' -f4-)
-key3=$(cat vault-operator-init.txt | grep "Unseal Key 3" | cut -d' ' -f4-)
-roottoken=$(cat vault-operator-init.txt | grep "Initial Root Token:" | cut -d' ' -f4-)
-cat $roottoken > root-token-vault.txt
+kubectl -n vault exec vault-0 -- vault operator init > ./tmp/vault-operator-init.txt
+key1=$(cat ./tmp/vault-operator-init.txt | grep "Unseal Key 1" | cut -d' ' -f4-)
+key2=$(cat ./tmp/vault-operator-init.txt | grep "Unseal Key 2" | cut -d' ' -f4-)
+key3=$(cat ./tmp/vault-operator-init.txt | grep "Unseal Key 3" | cut -d' ' -f4-)
+roottoken=$(cat ./tmp/vault-operator-init.txt | grep "Initial Root Token:" | cut -d' ' -f4-)
+echo $roottoken > ./tmp/root-token-vault.txt
 
 kubectl -n vault exec vault-0 -- vault operator unseal $key1 
 kubectl -n vault exec vault-0 -- vault operator unseal $key2
@@ -44,6 +44,6 @@ argoPass=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=
 echo "---------------------------------------"
 echo "ArgoCD Admin pass: $argoPass"
 echo "---------------------------------------"
-cat $argoPass > admin-password-argocd.txt
+echo $argoPass > ./tmp/admin-password-argocd.txt
 
 echo "Installation finished!"
