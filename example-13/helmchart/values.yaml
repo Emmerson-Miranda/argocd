@@ -7,3 +7,6 @@ image:
   tag: mockv2
   pullPolicy: IfNotPresent
   containerPort: 10003
+
+usernameValues: <path:kv-v2/data/my-secrets/secret1#username>
+passwordValues: <path:kv-v2/data/my-secrets/secret1#password>
