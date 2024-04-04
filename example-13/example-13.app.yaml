@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/Emmerson-Miranda/argocd.git
     targetRevision: HEAD
     path: example-13/helmchart
+    helm:
+      valueFiles:
+        - example-13/values/my-helmchart-values.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: example-13
