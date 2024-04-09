@@ -31,7 +31,9 @@ kubectl -n vault exec vault-0 -- vault login $roottoken
 
 kubectl -n vault exec vault-0 -- vault secrets enable kv-v2
 kubectl -n vault exec vault-0 -- vault secrets list
-kubectl -n vault exec vault-0 -- vault kv put kv-v2/my-secrets/secret1 username=emmerson password=mypassword
+kubectl -n vault exec vault-0 -- vault kv put kv-v2/my-secrets/secret1 username=emmerson1 password=mypassword1
+kubectl -n vault exec vault-0 -- vault kv put kv-v2/my-secrets/secret2 username=emmerson2 password=mypassword2
+kubectl -n vault exec vault-0 -- vault kv put kv-v2/my-secrets/secret3 username=emmerson3 password=mypassword3
 
 
 # INSTALL ArgoCD

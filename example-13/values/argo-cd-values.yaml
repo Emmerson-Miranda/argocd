@@ -47,7 +47,6 @@ configs:
             - argocd-vault-plugin
             - generate
             - "."
-            -  --verbose-sensitive-output
         lockRepo: false
 
 ## Repo Server
