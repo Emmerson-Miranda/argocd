@@ -50,4 +50,13 @@ echo "ArgoCD Admin pass: $argoPass"
 echo "---------------------------------------"
 echo $argoPass > ./tmp/admin-password-argocd.txt
 
+
+kubectl apply -f example-13.manifests.app.yaml 
+sleep 15
+kubectl -n manifests get secret data-1-secret -o yaml | yq .data.passwordInline | base64 -d
+kubectl -n manifests get secret data-1-secret -o yaml | yq .data.usernameInline | base64 -d
+
+kubectl -n manifests get secret string-1-secret -o yaml | yq .data.passwordInline | base64 -d
+kubectl -n manifests get secret string-1-secret -o yaml | yq .data.usernameInline | base64 -d
+
 echo "Installation finished!"
