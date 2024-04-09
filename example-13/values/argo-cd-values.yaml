@@ -41,11 +41,13 @@ configs:
               - sh
               - "-c"
               - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+              #- "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
         generate:
           command:
             - argocd-vault-plugin
             - generate
             - "."
+            -  --verbose-sensitive-output
         lockRepo: false
 
 ## Repo Server
@@ -83,7 +85,7 @@ repoServer:
         runAsUser: 999
       env:
         - name: VAULT_ADDR
-          value: http://vault.vault.svc.cluster.local
+          value: http://vault.vault.svc.cluster.local:8200
         - name: VAULT_TOKEN
           value: VAULT_TOKEN_PLACEHOLDER
         - name: AVP_TYPE
