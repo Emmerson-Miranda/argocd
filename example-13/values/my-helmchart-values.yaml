@@ -1,2 +1,2 @@
-username-values: <path:kv-v2/data/my-secrets/secret1#username>
-password-values: <path:kv-v2/data/my-secrets/secret1#password>
+usernameValues: <path:kv-v2/data/my-secrets/secret1#username>
+passwordValues: <path:kv-v2/data/my-secrets/secret1#password>
