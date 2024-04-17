@@ -1,6 +1,8 @@
 # Introduction (Work in progress)
 App of apps with snyc waves.
 
+Another example [here](https://github.com/jannfis/app-of-apps)
+
 ## etc/hosts
 
 ```bash

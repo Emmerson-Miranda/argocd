@@ -1,0 +1,9 @@
+name: upstream-example-13
+
+replicaCount: 1
+
+image:
+  repository: emmerson/upstream
+  tag: mockv2
+  pullPolicy: IfNotPresent
+  containerPort: 10003
