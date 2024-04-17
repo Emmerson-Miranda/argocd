@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parent-app
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Emmerson-Miranda/argocd.git
+    targetRevision: HEAD
+    path: example-14/app-of-apps/apps
+  destination:
+    name: 'in-cluster'
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
