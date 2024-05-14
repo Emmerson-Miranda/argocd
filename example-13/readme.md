@@ -1,5 +1,8 @@
-# Introduction (Work in progress)
-Integrate ArgoCD with Hashicorp Vault.
+# Introduction
+Integrate ArgoCD with Hashicorp Vault using sidecar options.
+
+This example replace secrets in plain manifests.
+
 
 ## etc/hosts
 
