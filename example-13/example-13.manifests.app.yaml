@@ -5,9 +5,8 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: ''
+    name: 'in-cluster'
     namespace: manifests
-    server: 'https://kubernetes.default.svc'
   source:
     path: example-13/manifests
     repoURL: 'https://github.com/Emmerson-Miranda/argocd.git'
