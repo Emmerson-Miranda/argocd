@@ -1,5 +1,9 @@
 # Introduction (Work in progress)
 Basic user management using local users. 
+- Disable root user
+- Create users: adminuser, devops and devuser.
+- Set Myu7UVI2TggfBlKJ as password for all users
+- Assign policies with different roles for all users.
 
 ## Cluster creation and destroy
 
@@ -32,6 +36,7 @@ configs:
       accounts.devops.password: $2a$10$mTHfPGI8aOKxf7QjZRddG.18D9aywpSL1lwsQmpun0luU3QITJCW.
       accounts.adminuser.password: $2a$10$mTHfPGI8aOKxf7QjZRddG.18D9aywpSL1lwsQmpun0luU3QITJCW.
   cm:
+    admin.enabled: "false"
     accounts.devuser: apiKey, login
     accounts.devops: apiKey, login
     accounts.adminuser: apiKey, login
@@ -51,7 +56,7 @@ configs:
 For more info see: [RBAC Configuration](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/)
 
 ## ArgoCD UI
-"admin" password admin-password-argocd.txt file, created during cluster creation..
+Use one of the users previously mentioned.
 
 ```bash
 open -a firefox -g https://argocd.owl.com

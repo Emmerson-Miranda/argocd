@@ -35,6 +35,7 @@ configs:
       accounts.devops.password: $2a$10$mTHfPGI8aOKxf7QjZRddG.18D9aywpSL1lwsQmpun0luU3QITJCW.
       accounts.adminuser.password: $2a$10$mTHfPGI8aOKxf7QjZRddG.18D9aywpSL1lwsQmpun0luU3QITJCW.
   cm:
+    admin.enabled: "false"
     accounts.devuser: apiKey, login
     accounts.devops: apiKey, login
     accounts.adminuser: apiKey, login
