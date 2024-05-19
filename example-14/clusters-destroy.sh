@@ -1,2 +1,3 @@
 #!/bin/bash
-kind delete cluster --name argocd-cluster-14
+
+source ../resources/scripts/cluster-destroy.sh 
