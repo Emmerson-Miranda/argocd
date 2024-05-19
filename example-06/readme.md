@@ -2,6 +2,7 @@
 Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*. Overrides parameters per environment.
 
 The environment generation is dynamic and comes from a git repo, for simplicity I used the same git repo but a different folder.
+![Applicationset view](example-06.png)
 
 More info at: 
 - https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/
@@ -12,17 +13,21 @@ More info at:
 - https://github.com/argoproj/applicationset/tree/master/examples/git-generator-files-discovery
 
 
-## Installation instructions
+## Cluster creation and destroy
 
-Creating
-
+Creation
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-06/example-06.appset.yaml
+./clusters-create.sh
 ```
-![3 environments](./example-06.png)
 
-Deleting
+Destroy
+```bash
+./clusters-destroy.sh
+```
+
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-06/example-06.appset.yaml
+open -a firefox -g https://argocd.owl.com
 ```

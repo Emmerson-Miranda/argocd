@@ -11,17 +11,21 @@ More info at:
 - https://github.com/argoproj/applicationset/tree/master/examples/git-generator-files-discovery
 
 
-Installation instructions
+## Cluster creation and destroy
 
-Creating
-
+Creation
+```bash
+./clusters-create.sh
 ```
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-05/example-05.appset.yaml
-```
-![3 environments](../example-04/example-04.png)
 
-Deleting
-
+Destroy
+```bash
+./clusters-destroy.sh
 ```
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-05/example-05.appset.yaml
+
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
+
+```bash
+open -a firefox -g https://argocd.owl.com
 ```

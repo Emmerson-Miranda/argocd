@@ -1,6 +1,8 @@
 # Introduction
 Deploy in multiple environments. Uses *ApplicationSet*, static *list generator*, basic *Helm charts* with *values* and *with syncPolicy*. Uses Helm Chart source code from *git*.
 
+![Appplications created by the applicationset](example-04.png)
+
 More info at: 
 - https://argo-cd.readthedocs.io/en/stable/user-guide/application-set/
 - https://argo-cd.readthedocs.io/en/stable/user-guide/helm/
@@ -10,17 +12,22 @@ More info at:
 - https://amralaayassen.medium.com/how-to-create-argocd-applications-automatically-using-applicationset-automation-of-the-gitops-59455eaf4f72
 
 
-Installation instructions
 
-Creating
+## Cluster creation and destroy
 
+Creation
+```bash
+./clusters-create.sh
 ```
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-04/example-04.appset.yaml
-```
-![3 environments](example-04.png)
 
-Deleting
-
+Destroy
+```bash
+./clusters-destroy.sh
 ```
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-04/example-04.appset.yaml
+
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
+
+```bash
+open -a firefox -g https://argocd.owl.com
 ```

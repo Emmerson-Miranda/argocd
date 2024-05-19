@@ -3,23 +3,27 @@ Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*,
 
 The environment generation is dynamic and comes from a git repo.
 
-## Installation instructions
+DEV
+![DEV](example-07-dev.png)
 
-Creating
+UAT
+![UAT](example-07-uat.png)
 
+## Cluster creation and destroy
+
+Creation
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-07/example-07.appset.yaml
+./clusters-create.sh
 ```
 
-As per config in a separate git repo there is only one replica for DEV.
-![3 environments](./example-07-dev.png)
+Destroy
+```bash
+./clusters-destroy.sh
+```
 
-
-As per config in a separate git repo there are three replicas for UAT.
-![3 environments](./example-07-uat.png)
-
-Deleting
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-07/example-07.appset.yaml
+open -a firefox -g https://argocd.owl.com
 ```

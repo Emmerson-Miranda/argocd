@@ -4,15 +4,21 @@ Simple argo 'application' deploying using basic *Helm charts* without parameters
 More info at: 
 - https://github.com/argoproj/argocd-example-apps/tree/master/helm-guestbook
 
-Installation instructions
+## Cluster creation and destroy
 
-```
-kubectl create namespace example-02
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-02/example-02.app.yaml
+Creation
+```bash
+./clusters-create.sh
 ```
 
-Deleting
-
+Destroy
+```bash
+./clusters-destroy.sh
 ```
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-02/example-02.app.yaml
+
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
+
+```bash
+open -a firefox -g https://argocd.owl.com
 ```
