@@ -1,20 +1,22 @@
 # Introduction
 Deploy in multiple environments. Uses *ApplicationSet*, dynamic *git generator*, use external *Helm chart*(wiremock) with *file values* and *with syncPolicy*. Inject values into chart from a Git repo.
+![Git generator](example-09-uat.png)
 
+## Cluster creation and destroy
 
-## Installation instructions
-
-Creating
-
+Creation
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
+./clusters-create.sh
 ```
 
-As per config in a separate git repo there are three replicas for UAT.
-![3 environments](./example-09-uat.png)
+Destroy
+```bash
+./clusters-destroy.sh
+```
 
-Deleting
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-09/example-09.appset.yaml
+open -a firefox -g https://argocd.owl.com
 ```
