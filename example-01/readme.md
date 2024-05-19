@@ -1,16 +1,21 @@
 # Introduction
 Simple argo 'application' deploying using basic k8s manifests.
 
-Installation instructions
+## Cluster creation and destroy
 
+Creation
 ```bash
-kubectl create namespace example-01
-kubectl apply -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-01/example-01.app.yaml
+./clusters-create.sh
 ```
 
+Destroy
+```bash
+./clusters-destroy.sh
+```
 
-Deleting
+## ArgoCD UI
+"admin" password admin-password-argocd.txt file, created during cluster creation.
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/Emmerson-Miranda/argocd/main/example-01/example-01.app.yaml
+open -a firefox -g https://argocd.owl.com
 ```
