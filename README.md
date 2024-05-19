@@ -1,11 +1,10 @@
-# ArgoCD Examples "v2.9.0+4e084ac"
+# ArgoCD Examples 
+
 ArgoCD examples, starting from most basic to medium complexity.
 
 ArgoCD Application CRD https://argoproj.github.io/argo-cd/operator-manual/application.yaml
 
 List of examples:
-
-Examples from 01 to 09 uses Minikube. Example 10 uses KinD.
 
 | Example | Description                                            |
 |-----|--------------------------------------------------------|
@@ -26,50 +25,28 @@ Examples from 01 to 09 uses Minikube. Example 10 uses KinD.
 | [15](./example-15/readme.md) | (WIP) Integrate ArgoCD with Hashicorp Vault using Helm Plugin and replacing secrets in values files.  |
 | [16](./example-16/readme.md) | Create and configure local users.  |
 
-## Installation
 
-https://argo-cd.readthedocs.io/en/release-2.0/getting_started/
-
-## Starting Minikube clusters
+## /etc/hosts
+Add argocd.owl.com DNS entry in your /etc/hosts file.
 
 ```bash
-#minikube that contains ArgoCD installed
-minikube start --network default
-#target cluster to deploy
-minikube start -p othercluster --network default
+192.168.64.1    argocd.owl.com
 ```
 
-## ArgoCD Installation in Minikube
+## ArgoCD Installation in KinD
 
-```bash
-kubectl create ns argocd
-kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml -n argocd
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-```
+Each example has a create and destroy script.
 
-### Argocd CLI login
+## Argocd CLI login
 
 To download CLI follow instructions here https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli
 
-Open a new console to run the service
-```bash
-minikube  service argocd-server -n argocd --url
-```
-```
-http://127.0.0.1:53208
-http://127.0.0.1:53209
-❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
-```
 
-Login
+### Login
 
 ```bash
 argoPass=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 echo $argoPass
-argocd login --insecure --grpc-web 127.0.0.1:53208 --username admin --password $argoPass
+argocd login --insecure --grpc-web argocd.owl.com --username admin --password $argoPass 
 ```
-```
-'admin:login' logged in successfully
-Context '127.0.0.1:53208' updated
-```
+
