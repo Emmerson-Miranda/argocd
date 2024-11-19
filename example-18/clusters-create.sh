@@ -5,6 +5,13 @@
 kind create cluster --config ./kind/application-cluster.yaml
 kind create cluster --config ./kind/argocd-cluster.yaml
 
+# deploying ingress
+kubectl apply -f ./kind/nginx-ingress-kind-deploy.yaml
+sleep 15
+echo "Waiting for ingress-nginx pod to be ready $(date)"
+kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+echo "Ingress-nginx pod ready $(date)" 
+
 # DEPLOYING ARGOCD
 kubectl create ns argocd
 kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml -n argocd

@@ -1,0 +1,9 @@
+#disable login in Argo Worflow UI
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - server
+        - --auth-mode=server
+        name: argo-server

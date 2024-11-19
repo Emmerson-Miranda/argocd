@@ -52,32 +52,16 @@ spec:
       # namespace to listen events within
       namespace: argo-events
       # resource group
-      group: argoproj.io
+      group: ""
       # resource version
-      version: v1alpha1
+      version: v1
       # resource kind
-      resource: workflows
+      resource: configmap
       # type of events
       # possible values are ADD, DELETE, UPDATE
       # Optional
       eventTypes:
         - ADD
-      # optional.
-      filter:
-        # This indicates only watch the events happened after the service start time.
-        afterStart: true
-        # labels and filters are meant to provide K8s API options to filter the object list that are being watched.
-        # Please read https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api for more details.
-
-        # labels provide listing options to K8s API to watch objects
-        labels:
-          - key: app
-            # Supported operations like ==, !=, etc.
-            # Defaults to ==.
-            # Refer https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors for more info.
-            # optional.
-            operation: "=="
-            value: my-workflow
 
 #        # fields provide listing options to K8s API to watch objects
 #        fields:

@@ -1,9 +1,11 @@
 # https://argoproj.github.io/argo-events/quick_start/
-
-export ARGO_WORKFLOWS_VERSION=3.5.4
-kubectl create namespace argo
-kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v$ARGO_WORKFLOWS_VERSION/install.yaml
 # https://argo-workflows.readthedocs.io/en/latest/quick-start/
+
+#https://github.com/argoproj/argo-workflows/releases
+kubectl create namespace argo
+export ARGO_WORKFLOWS_VERSION=3.6.0
+kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_WORKFLOWS_VERSION}/install.yaml
+kubectl patch deployment argo-server --patch-file manifests/patch-argo-server.yaml -n argo
 
 
 # https://argoproj.github.io/argo-events/installation/
@@ -30,3 +32,6 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-
 
 ## INSTALLING THE EXAMPLE
 kubectl apply -f example-18-event-source-resources.yaml 
+
+## INSTALLING Ingress Controller
+kubectl apply -f manifests/argoworflow-ingress.yaml
