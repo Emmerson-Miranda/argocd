@@ -1,4 +1,6 @@
 ---
+# https://github.com/argoproj/argo-events/blob/master/examples/event-sources/resource.yaml
+# https://github.com/argoproj/argo-events/blob/master/examples/sensors/resource.yaml
 
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
@@ -23,6 +25,22 @@ spec:
       # Optional
       eventTypes:
         - DELETE
+        - UPDATE
+      filter:
+        # This indicates only watch the events happened after the service start time.
+        afterStart: true
+        # labels and filters are meant to provide K8s API options to filter the object list that are being watched.
+        # Please read https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#api for more details.
+
+        # labels provide listing options to K8s API to watch objects
+        labels:
+          - key: argocd.argoproj.io/secret-type
+            # Supported operations like ==, !=, etc.
+            # Defaults to ==.
+            # Refer https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors for more info.
+            # optional.
+            operation: "=="
+            value: cluster
 
 ---
 
