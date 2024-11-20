@@ -74,7 +74,7 @@ spec:
                 arguments:
                   parameters:
                   - name: message
-                    # the value will get overridden by the event payload from test-dep
+                    # the value will get overridden by the event payload from cluster-deleted
                     value: hello world
                 templates:
                 - name: whalesay
@@ -87,8 +87,11 @@ spec:
                     args: ["{{inputs.parameters.message}}"]
           parameters:
             - src:
-                dependencyName: test-dep
-                dataKey: body
+                dependencyName: cluster-deleted
+                # https://argoproj.github.io/argo-events/eventsources/setup/resource/#event-structure
+                #dataKey: body
+                #dataKey: resource # value: secrets
+                dataKey: body.metadata.name
               dest: spec.arguments.parameters.0.value
       retryStrategy:
         steps: 3

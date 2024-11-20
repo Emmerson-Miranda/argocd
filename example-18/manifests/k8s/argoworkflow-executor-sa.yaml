@@ -1,6 +1,7 @@
 ---
 # https://argo-workflows.readthedocs.io/en/latest/workflow-rbac/
 # https://argo-workflows.readthedocs.io/en/latest/service-accounts/
+# https://github.com/argoproj/argo-events/tree/master/examples  --- operate-workflow-sa
 
 apiVersion: v1
 kind: ServiceAccount
