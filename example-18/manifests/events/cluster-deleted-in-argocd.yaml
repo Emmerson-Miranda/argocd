@@ -44,6 +44,8 @@ spec:
 
 ---
 
+# The workflow have to delete all argocd applications for the cluster associated with the secret
+# kubectl -n argocd delete Application -l cluster=application-cluster
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
