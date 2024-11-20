@@ -5,7 +5,7 @@
 kubectl create namespace argo
 export ARGO_WORKFLOWS_VERSION=3.6.0
 kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_WORKFLOWS_VERSION}/install.yaml
-kubectl patch deployment argo-server --patch-file manifests/patch-argo-server.yaml -n argo
+kubectl patch deployment argo-server --patch-file ./manifests/k8s/patch-argo-server.yaml -n argo
 
 
 # https://argoproj.github.io/argo-events/installation/

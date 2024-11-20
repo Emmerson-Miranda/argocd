@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Emmerson-Miranda/argocd.git
     targetRevision: HEAD
-    path: example-18/manifests
+    path: example-18/manifests/applications
   destination:
     server: https://192.168.64.1:8443
     namespace: example-18

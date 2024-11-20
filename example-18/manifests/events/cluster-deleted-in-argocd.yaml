@@ -44,12 +44,11 @@ spec:
 
 ---
 
-# The workflow have to delete all argocd applications for the cluster associated with the secret
-# kubectl -n argocd delete Application -l cluster=application-cluster
+# Print cluster deleted
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: trigger-delete-cluster-workflow
+  name: trigger-print-deleted-cluster
   namespace: argo-events
 spec:
   template:
@@ -60,7 +59,7 @@ spec:
       eventName: deleted-argocd-secret
   triggers:
     - template:
-        name: argocd-apps-cleanup-workflow
+        name: print-deleted-cluster
         k8s:
           operation: create
           source:
@@ -68,9 +67,9 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: cleanup-cluster-task-
+                generateName: print-deleted-cluster-
                 labels:
-                  app: cleanup-cluster-task
+                  app: print-deleted-cluster
               spec:
                 entrypoint: whalesay
                 arguments:
@@ -87,6 +86,65 @@ spec:
                     image: docker/whalesay:latest
                     command: [cowsay]
                     args: ["{{inputs.parameters.message}}"]
+          parameters:
+            - src:
+                dependencyName: cluster-deleted
+                # https://argoproj.github.io/argo-events/eventsources/setup/resource/#event-structure
+                #dataKey: body
+                #dataKey: resource # value: secrets
+                #dataKey: body.metadata.name  # value: mycluster-secret
+                dataKey: body.metadata.labels.cluster
+              dest: spec.arguments.parameters.0.value
+      retryStrategy:
+        steps: 3
+
+
+
+---
+
+# The workflow have to delete all argocd applications for the cluster associated with the secret
+# kubectl -n argocd delete Application -l cluster=application-cluster
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: trigger-deleted-cluster
+  namespace: argo-events
+spec:
+  template:
+    serviceAccountName: argoworkflow-executor
+  dependencies:
+    - name: cluster-deleted
+      eventSourceName: cluster-deleted-in-argocd
+      eventName: deleted-argocd-secret
+  triggers:
+    - template:
+        name: deleted-cluster
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: cleanup-apps-
+                labels:
+                  app: cleanup-apps
+              spec:
+                entrypoint: kubectl
+                arguments:
+                  parameters:
+                  - name: message
+                    # the value will get overridden by the event payload from cluster-deleted
+                    value: hello world
+                templates:
+                - name: kubectl
+                  inputs:
+                    parameters:
+                    - name: message
+                  container:
+                    image: bitnami/kubectl:latest
+                    command: ["kubectl", "-n", "argocd", "delete", "Application", "-l"]
+                    args: ["cluster={{inputs.parameters.message}}"]
           parameters:
             - src:
                 dependencyName: cluster-deleted

@@ -39,13 +39,19 @@ open -a firefox -g https://argocd.owl.com/settings/clusters
 
 echo "ArgoCD Installed with two clusters!"
 
+# DEPLOYING ARGO EVENTS and WORKFLOW
 ./install-argo-events-and-workflow.sh
+./install-argo-cli.sh
 
+# RBAC configuration
 kubectl apply -f ./manifests/k8s/argoworkflow-executor-sa.yaml 
 kubectl apply -f ./manifests/k8s/read-argocd-secrets.yaml 
-argo submit ./manifests/workflow/hello-world.yaml -n argo --serviceaccount argoworkflow-executor
-kubectl apply -f ./manifests/events/cluster-deleted-in-argocd.yaml  
 kubectl apply -f ./manifests/k8s/create-workflowresults.yaml 
+kubectl apply -f ./manifests/k8s/delete-argocd-applications.yaml 
+kubectl apply -f ./manifests/events/cluster-deleted-in-argocd.yaml  
+
+# deployin a simple workflow and checking it
+argo submit ./manifests/workflow/hello-world.yaml -n argo --serviceaccount argoworkflow-executor
 argo list -o wide -n argo
 
 open -a firefox -g https://argoworkflow.owl.com/
