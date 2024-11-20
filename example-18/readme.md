@@ -32,12 +32,13 @@ upstream-deployment-7fdbf9974-w7sgn   1/1     Running   0          3m38s   10.24
 
 Install ArgoCD CLI, see [Instructions here](../README.md)
 
-Script will use 30080 and 30443 ports on your localhost.
-
 ```bash
 ./clusters-create.sh
 ```
 
+Open your browser in two Argo hosts:
+* https://argocd.owl.com/
+* https://argoworkflow.owl.com/
 
 ## Deleting everything
 
