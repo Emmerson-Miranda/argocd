@@ -3,5 +3,4 @@ pid-*
 example-13/vault-operator-init.txt
 */tmp/*
 example-*/example-*cluster.yaml
-example-18/example-18.cluster.yaml
-example-18/example-18.cluster.yaml
+*/example-*cluster.yaml
