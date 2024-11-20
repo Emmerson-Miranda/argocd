@@ -40,6 +40,10 @@ echo "ArgoCD Installed with two clusters!"
 
 ./install-argo-events-and-workflow.sh
 
+kubectl apply -f ./manifests/k8s/argoworkflow-executor-sa.yaml 
+argo submit ./manifests/workflow/hello-world.yaml -n argo --serviceaccount argoworkflow-executor
+argo list -o wide -n argo
+
 open -a firefox -g https://argoworkflow.owl.com/
 
 echo "Argo Events and Argo Workflow installed!"

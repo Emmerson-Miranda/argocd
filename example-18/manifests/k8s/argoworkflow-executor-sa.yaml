@@ -1,0 +1,92 @@
+---
+# https://argo-workflows.readthedocs.io/en/latest/workflow-rbac/
+# https://argo-workflows.readthedocs.io/en/latest/service-accounts/
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argoworkflow-executor
+  namespace: default
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argoworkflow-executor
+  namespace: argo
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argoworkflow-executor
+  namespace: argo-events
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argoworkflow-executor
+  namespace: argocd
+      
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argoworkflow-executor
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: argoworkflow-executor
+  namespace: default
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argoworkflow-executor
+  namespace: argo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: argoworkflow-executor
+  namespace: argo
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argoworkflow-executor
+  namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: argoworkflow-executor
+  namespace: argocd
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argoworkflow-executor
+  namespace: argo-events
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: argoworkflow-executor
+  namespace: argo-events
