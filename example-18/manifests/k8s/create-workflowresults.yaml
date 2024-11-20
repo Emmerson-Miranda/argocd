@@ -1,0 +1,31 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argoproj-privilegies
+rules:
+  - apiGroups: ["argoproj.io"]
+    resources: ["*"]
+    verbs: ["*"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argoproj-privilegies
+  namespace: argo-events
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: argo-events
+roleRef:
+  kind: ClusterRole
+  name: argoproj-privilegies
+  apiGroup: rbac.authorization.k8s.io
+
+
+ # Error (exit code 64): workflowtaskresults.argoproj.io is forbidden: 
+ # User "system:serviceaccount:argo-events:default" 
+ # cannot create resource "workflowtaskresults" in 
+ # API group "argoproj.io" in the namespace "argo-events"

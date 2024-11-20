@@ -41,7 +41,10 @@ echo "ArgoCD Installed with two clusters!"
 ./install-argo-events-and-workflow.sh
 
 kubectl apply -f ./manifests/k8s/argoworkflow-executor-sa.yaml 
+kubectl apply -f ./manifests/k8s/read-argocd-secrets.yaml 
 argo submit ./manifests/workflow/hello-world.yaml -n argo --serviceaccount argoworkflow-executor
+kubectl apply -f ./manifests/events/cluster-deleted-in-argocd.yaml  
+kubectl apply -f ./manifests/k8s/create-workflowresults.yaml 
 argo list -o wide -n argo
 
 open -a firefox -g https://argoworkflow.owl.com/
