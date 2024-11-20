@@ -11,8 +11,8 @@ check_hostname argocd.owl.com
 check_hostname argoworkflow.owl.com
 
 # Creating clusters
-check_file_exist $folder/kind/application-cluster.yaml
-kind create cluster --config $folder/kind/application-cluster.yaml
+check_file_exist $folder/manifests/kind/application-cluster.yaml
+kind create cluster --config $folder/manifests/kind/application-cluster.yaml
 create_argo_cluster $parent/resources
 
 install_argocd $folder
@@ -26,14 +26,14 @@ caData=$(cat ~/.kube/config | yq '.clusters[] | select(.name=="kind-application-
 certData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-certificate-data')
 keyData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-key-data')
 clusterName="application-cluster" # NOT CHANGE because this value is hardcoded in *application.yaml
-cat example-18.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" | sed "s/PLACEHOLDER_CLUSTER/$clusterName/" > example-18.cluster.yaml
-kubectl apply -f example-18.cluster.yaml
+cat ./manifests/argocd/example-18.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" | sed "s/PLACEHOLDER_CLUSTER/$clusterName/" > ./manifests/argocd/example-18.cluster.yaml
+kubectl apply -f ./manifests/argocd/example-18.cluster.yaml
 
 # CREATING A NEW ARGO PROJECT DECLARATIVELY
-kubectl apply -f example-18.appproject.yaml  
+kubectl apply -f ./manifests/argocd/example-18.appproject.yaml  
 
 # DEPLOYING ARGO APP
-kubectl apply -f example-18.application.yaml 
+kubectl apply -f ./manifests/argocd/example-18.application.yaml 
 
 open -a firefox -g https://argocd.owl.com/settings/clusters
 
