@@ -24,6 +24,7 @@ List of examples:
 | [14](./example-14/readme.md) | App of Apps with helmcharts  |
 | [15](./example-15/readme.md) | (WIP) Integrate ArgoCD with Hashicorp Vault using Helm Plugin and replacing secrets in values files.  |
 | [16](./example-16/readme.md) | Create and configure local users.  |
+| [18](./example-18/readme.md) | Argo ecosystem integration (CD, Event, Workflow). |
 
 
 ## /etc/hosts
