@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: example-18
   namespace: argocd
+  labels:
+    cluster: application-cluster
 spec:
   project: my-project
   source:

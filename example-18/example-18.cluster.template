@@ -5,6 +5,7 @@ metadata:
   namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: cluster
+    cluster: "PLACEHOLDER_CLUSTER"
 type: Opaque
 stringData:
   name: kind-application-cluster

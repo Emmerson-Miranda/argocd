@@ -25,7 +25,8 @@ install_argocd $folder
 caData=$(cat ~/.kube/config | yq '.clusters[] | select(.name=="kind-application-cluster") | .cluster.certificate-authority-data')
 certData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-certificate-data')
 keyData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-key-data')
-cat example-18.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" > example-18.cluster.yaml
+clusterName="application-cluster" # NOT CHANGE because this value is hardcoded in *application.yaml
+cat example-18.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" | sed "s/PLACEHOLDER_CLUSTER/$clusterName/" > example-18.cluster.yaml
 kubectl apply -f example-18.cluster.yaml
 
 # CREATING A NEW ARGO PROJECT DECLARATIVELY
