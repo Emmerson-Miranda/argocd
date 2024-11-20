@@ -11,7 +11,8 @@ check_hostname argocd.owl.com
 check_hostname argoworkflow.owl.com
 
 # Creating clusters
-kind create cluster --config ./kind/application-cluster.yaml
+check_file_exist $folder/kind/application-cluster.yaml
+kind create cluster --config $folder/kind/application-cluster.yaml
 create_argo_cluster $parent/resources
 
 install_argocd $folder

@@ -4,8 +4,6 @@
 
 #argocd_manifest="${param_argocd_manifest:-$basefolder/resources/kind/argocd-values.yaml}"
 
-
-# Check if a hostname is in /etc/hosts
 function check_hostname(){
     param_hostname="$1"
     cat /etc/hosts | grep $param_hostname
@@ -15,6 +13,17 @@ function check_hostname(){
         echo "*********************************************************************************"
         echo "ERROR: Pre-requisite not satisfied!"
         echo "Add the hostname $param_hostname in /etc/hosts pointing out to your IP 192.168.x.y"
+        echo "*********************************************************************************"
+        exit -1
+    fi
+}
+
+function check_file_exist(){
+    filename="$1"
+    echo "Checking file exists $filename"
+    if ! test -f "$filename"; then
+        echo "*********************************************************************************"
+        echo "ERROR: Required file does not exists: $filename"
         echo "*********************************************************************************"
         exit -1
     fi
@@ -39,14 +48,26 @@ function create_argo_cluster(){
     echo "KinD configuration base folder: $basefolder"
 
     #create KinD cluster
+    check_file_exist $basefolder/kind/argocd-cluster.yaml
     kind create cluster --config $basefolder/kind/argocd-cluster.yaml
 
     # Deploying KinD ingress
+    check_file_exist $basefolder/kind/nginx-ingress-kind-deploy.yaml
     kubectl apply -f $basefolder/kind/nginx-ingress-kind-deploy.yaml
     sleep 15
     echo "Waiting for ingress-nginx pod to be ready $(date)"
     kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
-    echo "Ingress-nginx pod ready $(date)"
+    if [ $? -eq 0 ]; then
+        echo "Ingress-nginx pod ready $(date)"
+    else
+        echo "*********************************************************************************"
+        echo "ERROR: KinD Ingress controller not ready"
+        echo "Inspect ingress pods: kubectl --namespace ingress-nginx  get po"
+        echo "*********************************************************************************"
+        kubectl --namespace ingress-nginx  get po
+        exit -1
+    fi
+    
 }
 
 
@@ -68,6 +89,7 @@ function install_argocd(){
     echo "ArgoCD configuration base folder: $basefolder"
 
     helm repo add argo-cd https://argoproj.github.io/argo-helm
+    check_file_exist $basefolder/values/argocd-values.yaml
     helm upgrade argocd argo-cd/argo-cd -i -n argocd -f $basefolder/values/argocd-values.yaml --create-namespace
     sleep 15
     kubectl wait po  -l app.kubernetes.io/name=argocd-server --for=condition=Ready -n argocd --timeout=60s
@@ -88,9 +110,11 @@ function install_argocd(){
             echo 'Login succeeded'
             break
         else
-            echo "Login $i failed, sleeping 5 secs"|
+            echo "Login $i failed, sleeping 5 secs"
             sleep 5
         fi
+
+        i=$((i+1))
     done
 }
 
@@ -113,6 +137,7 @@ function install_hashicorp_vault(){
         #echo "Deploying Hashicorp Vault ..."
 
         helm repo add hashicorp https://helm.releases.hashicorp.com
+        check_file_exist $basefolder/values/hashicorp-vault-values.yaml
         helm upgrade vault hashicorp/vault -i -n vault -f $basefolder/values/hashicorp-vault-values.yaml --create-namespace
         sleep 15
         kubectl wait po  -l app.kubernetes.io/name=vault --for=condition=Ready -n vault --timeout=60s

@@ -12,21 +12,14 @@ CURRENT   NAME                       CLUSTER                    AUTHINFO        
 *         kind-argocd-cluster        kind-argocd-cluster        kind-argocd-cluster   
 ```
 
-- Register a kubernetes cluster in ArgoCD using argocd CLI
+- Register a kubernetes cluster in ArgoCD using Kubernetes Secret
 ![New cluster in ArgoCD registred](./img/clusters.png)
-
-- Register declaratively a new project in Argo called "my-project"
-![New project in ArgoCD registred](./img/projects.png)
 
 - The application example-18 in deployed in application-cluster.f
 ![Example 10 deployed](./img/application.png)
 
-```
-kubectl get po -n example-18 -o wide
-NAME                                  READY   STATUS    RESTARTS   AGE     IP           NODE                         NOMINATED NODE   READINESS GATES
-busybox-deployment-86c4c67f86-czjz2   1/1     Running   0          3m38s   10.244.1.3   application-cluster-worker   <none>           <none>
-upstream-deployment-7fdbf9974-w7sgn   1/1     Running   0          3m38s   10.244.1.2   application-cluster-worker   <none>           <none>
-```
+- Register declaratively a new project in Argo called "my-project"
+
 
 ## Installation instructions
 
