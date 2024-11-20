@@ -5,6 +5,21 @@
 #argocd_manifest="${param_argocd_manifest:-$basefolder/resources/kind/argocd-values.yaml}"
 
 
+# Check if a hostname is in /etc/hosts
+function check_hostname(){
+    param_hostname="$1"
+    cat /etc/hosts | grep $param_hostname
+    if [ $? -eq 0 ]; then
+        echo 'argocd.owl.com present in /etc/hosts'
+    else
+        echo "*********************************************************************************"
+        echo "ERROR: Pre-requisite not satisfied!"
+        echo "Add the hostname $param_hostname in /etc/hosts pointing out to your IP 192.168.x.y"
+        echo "*********************************************************************************"
+        exit -1
+    fi
+}
+
 # Create a KinD cluster to deploy ArgoCD
 function create_argo_cluster(){
     echo "------------------------ create_argo_cluster ---------------------------------------------------"
@@ -63,6 +78,20 @@ function install_argocd(){
     echo "---------------------------------------"
     mkdir -p $basefolder/tmp
     echo $argoPass > $basefolder/tmp/admin-password-argocd.txt
+
+    # LOGIN in ARGO CLI
+    i=0
+    until [[ $i -gt 6  ]]
+    do
+        argocd login --insecure --grpc-web argocd.owl.com --username admin --password $argoPass
+        if [ $? -eq 0 ]; then
+            echo 'Login succeeded'
+            break
+        else
+            echo "Login $i failed, sleeping 5 secs"|
+            sleep 5
+        fi
+    done
 }
 
 

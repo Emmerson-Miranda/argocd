@@ -31,7 +31,7 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-
 
 
 ## INSTALLING THE EXAMPLE
-kubectl apply -f example-18-event-source-resources.yaml 
+#kubectl apply -f example-18-event-source-resources.yaml 
 
 ## INSTALLING Ingress Controller
 kubectl apply -f manifests/argoworflow-ingress.yaml
