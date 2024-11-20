@@ -4,3 +4,6 @@ example-13/vault-operator-init.txt
 */tmp/*
 example-*/example-*cluster.yaml
 */example-*cluster.yaml
+example-18/manifests/argocd/example-18.application.yaml
+example-18/manifests/argocd/example-18.appproject.yaml
+example-18/manifests/argocd/example-18.cluster.yaml
