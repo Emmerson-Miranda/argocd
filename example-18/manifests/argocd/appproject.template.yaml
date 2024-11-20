@@ -13,7 +13,7 @@ spec:
   # Only permit applications to deploy to the 'othercluster' cluster
   destinations:
   - namespace: '*'
-    server: https://192.168.64.1:8443
+    name: PLACEHOLDER_CLUSTER
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace

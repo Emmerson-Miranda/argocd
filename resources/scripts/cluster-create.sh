@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#param_argocd_manifest="$2"
-
-#argocd_manifest="${param_argocd_manifest:-$basefolder/resources/kind/argocd-values.yaml}"
-
 function check_hostname(){
     param_hostname="$1"
     cat /etc/hosts | grep $param_hostname
@@ -70,7 +66,6 @@ function create_argo_cluster(){
     
 }
 
-
 # Install ArgoCD
 function install_argocd(){
     echo "---------------------- install_argocd -----------------------------------------------------"
@@ -116,6 +111,34 @@ function install_argocd(){
 
         i=$((i+1))
     done
+}
+
+# Create ArgoCD secret to register a remote cluster
+function create_argocd_secret_cluster_from_kubeconfig(){
+    param_base_folder="$1"
+    param_cluster_name="$2"
+    para_target_filename="$3"
+
+    echo $param_base_folder
+    echo $param_cluster_name
+    echo $para_target_filename
+
+    cat ~/.kube/config | grep $param_cluster_name
+    if [ $? -eq 0 ]; then
+        echo "Cluster $param_cluster_name found in ~/.kube/config"
+    else
+        echo "*********************************************************************************"
+        echo "ERROR: Cluster $param_cluster_name not found in ~/.kube/config!"
+        echo "*********************************************************************************"
+        exit -1
+    fi
+
+    caData=$(cat ~/.kube/config | yq ".clusters[] | select(.name==\"$param_cluster_name\") | .cluster.certificate-authority-data")
+    certData=$(cat ~/.kube/config | yq ".users[] | select(.name==\"$param_cluster_name\") | .user.client-certificate-data")
+    keyData=$(cat ~/.kube/config | yq ".users[] | select(.name==\"$param_cluster_name\") | .user.client-key-data")
+
+    check_file_exist $param_base_folder/resources/manifests/argocd/secret-cluster-template.yaml
+    cat $param_base_folder/resources/manifests/argocd/secret-cluster-template.yaml | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" | sed "s/PLACEHOLDER_CLUSTER/$param_cluster_name/" > $para_target_filename
 }
 
 

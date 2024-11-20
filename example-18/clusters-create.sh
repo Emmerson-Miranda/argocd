@@ -10,50 +10,47 @@ source ../resources/scripts/cluster-create.sh
 check_hostname argocd.owl.com
 check_hostname argoworkflow.owl.com
 
-# Creating clusters
+# Creating KinD clusters
 check_file_exist $folder/manifests/kind/application-cluster.yaml
 kind create cluster --config $folder/manifests/kind/application-cluster.yaml
 create_argo_cluster $parent/resources
 
+# Installing ArgoCD
 install_argocd $folder
 
+# REGISTERING a new cluster into ArgoCD
+param_cluster_name="kind-application-cluster"
 
-# REGISTERING a new cluster into ARGO using CLI
-# argocd cluster add kind-application-cluster -y
-
-# REGISTERING a new cluster into ARGO DECLARATIVELY
-caData=$(cat ~/.kube/config | yq '.clusters[] | select(.name=="kind-application-cluster") | .cluster.certificate-authority-data')
-certData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-certificate-data')
-keyData=$(cat ~/.kube/config | yq '.users[] | select(.name=="kind-application-cluster") | .user.client-key-data')
-clusterName="application-cluster" # NOT CHANGE because this value is hardcoded in *application.yaml
-cat ./manifests/argocd/example-18.cluster.template | sed "s/PLACEHOLDER_CERT_DATA/$certData/"  | sed "s/PLACEHOLDER_KEY_DATA/$keyData/"  | sed "s/PLACEHOLDER_CA_DATA/$caData/" | sed "s/PLACEHOLDER_CLUSTER/$clusterName/" > ./manifests/argocd/example-18.cluster.yaml
+create_argocd_secret_cluster_from_kubeconfig $parent $param_cluster_name $folder/manifests/argocd/example-18.cluster.yaml
 kubectl apply -f ./manifests/argocd/example-18.cluster.yaml
 
-# CREATING A NEW ARGO PROJECT DECLARATIVELY
-kubectl apply -f ./manifests/argocd/example-18.appproject.yaml  
-
 # DEPLOYING ARGO APP
+cat ./manifests/argocd/appproject.template.yaml   | sed "s/PLACEHOLDER_CLUSTER/$param_cluster_name/" > ./manifests/argocd/example-18.appproject.yaml
+cat ./manifests/argocd/application.template.yaml  | sed "s/PLACEHOLDER_CLUSTER/$param_cluster_name/" > ./manifests/argocd/example-18.application.yaml
+
+kubectl apply -f ./manifests/argocd/example-18.appproject.yaml  
 kubectl apply -f ./manifests/argocd/example-18.application.yaml 
 
-open -a firefox -g https://argocd.owl.com/settings/clusters
-
-echo "ArgoCD Installed with two clusters!"
 
 # DEPLOYING ARGO EVENTS and WORKFLOW
 ./install-argo-events-and-workflow.sh
-./install-argo-cli.sh
+../resources/scripts/install-argo-cli.sh
 
 # RBAC configuration
 kubectl apply -f ./manifests/k8s/argoworkflow-executor-sa.yaml 
 kubectl apply -f ./manifests/k8s/read-argocd-secrets.yaml 
 kubectl apply -f ./manifests/k8s/create-workflowresults.yaml 
 kubectl apply -f ./manifests/k8s/delete-argocd-applications.yaml 
+
+# Events and Workflow
 kubectl apply -f ./manifests/events/cluster-deleted-in-argocd.yaml  
 
-# deployin a simple workflow and checking it
+# Testing installation - deploying a simple workflow and checking it
 argo submit ./manifests/workflow/hello-world.yaml -n argo --serviceaccount argoworkflow-executor
 argo list -o wide -n argo
 
+# Open firefox
+open -a firefox -g https://argocd.owl.com/settings/clusters
 open -a firefox -g https://argoworkflow.owl.com/
 
-echo "Argo Events and Argo Workflow installed!"
+echo "INSTALLATION COMPLETED!!!"

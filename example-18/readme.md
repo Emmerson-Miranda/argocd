@@ -44,7 +44,7 @@ There are three ways to trigger the workflow:
 1) Deleting the secret from command line
 
 ```bash
-kubectl -n argocd delete secret mycluster-secret 
+kubectl -n argocd delete secret kind-application-cluster-secret 
 ```
 
 2) Deleting the cluster using ArgoCD UI (Settings -> Clusters -> three dots -> Delete)
@@ -52,7 +52,7 @@ kubectl -n argocd delete secret mycluster-secret
 
 3) modifying the secret from command line
 ```bash
-kubectl -n argocd label secret mycluster-secret a=1
+kubectl -n argocd label secret kind-application-cluster-secret a=1
 ```
 
 
