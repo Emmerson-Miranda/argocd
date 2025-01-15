@@ -27,6 +27,14 @@ server:
 configs:
   # ConfigMap for Config Management Plugins
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/config-management-plugins/
+  secret:
+    extra:
+      VAULT_ADDR: "${vault_address}"
+      AVP_TYPE: "vault"
+      AVP_AUTH_TYPE: "approle"
+      AVP_ROLE_ID: "${avp_role_id}"
+      AVP_SECRET_ID: "${avp_secret_id}"
+      AVP_MOUNT_PATH: "${avp_mount_path}"
 
   cmp:
     # -- Create the argocd-cmp-cm configmap

@@ -50,8 +50,7 @@ echo "ArgoCD Admin pass: $argoPass"
 echo "---------------------------------------"
 echo $argoPass > ./tmp/admin-password-argocd.txt
 
-sleep 15
 kubectl apply -f example-13.manifests.app.yaml
-sleep 15
+
 source ./list-secrets.sh
 echo "Installation finished!"
