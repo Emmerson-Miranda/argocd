@@ -1,0 +1,126 @@
+global:
+  # -- Default domain used by all components
+  ## Used for ingresses, certificates, SSO, notifications, etc.
+  domain: argocd.owl.com
+
+## Server
+server:
+  # -- Argo CD server name
+  name: server
+
+  # -- The number of server pods to run
+  replicas: 1
+
+  # Argo CD server ingress configuration
+  ingress:
+    # -- Enable an ingress resource for the Argo CD server
+    enabled: true
+
+    # -- Additional ingress annotations
+    ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+
+configs:
+  # ConfigMap for Config Management Plugins
+  # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/config-management-plugins/
+
+  secret:
+    extra:
+      VAULT_ADDR: "${vault_address}"
+      AVP_TYPE: "vault"
+      AVP_AUTH_TYPE: "approle"
+      AVP_ROLE_ID: "${avp_role_id}"
+      AVP_SECRET_ID: "${avp_secret_id}"
+      AVP_MOUNT_PATH: "${avp_mount_path}"
+
+  cmp:
+    # -- Create the argocd-cmp-cm configmap
+    create: true
+
+    # -- Plugin yaml files to be added to argocd-cmp-cm
+    plugins:
+
+      vault-helm: 
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - sh
+              - "-c"
+              - "find . -name 'Chart.yaml' && find . -name '*values.yaml'"
+        generate:
+          command:
+          - sh
+          - -c
+          - | 
+            helm template $ARGOCD_ENV_HELM_RELEASE_NAME --include-crds --api-versions ${argocd_api_versions} -n $ARGOCD_APP_NAMESPACE  $${ARGOCD_ENV_HELM_ARGS_ADD_FILES} $${ARGOCD_ENV_HELM_ARGS} . |
+            argocd-vault-plugin generate --verbose-sensitive-output -
+        init:
+          command:
+          - sh
+          - -c
+          - |
+            git clone http://gitlab/devops/config/cd/platform.git platform && mkdir -p $${ARGOCD_ENV_HELM_ARGS_FOLDERS}  && touch $${ARGOCD_ENV_HELM_ARGS_ADD_FILES}
+        lockRepo: false
+
+## Repo Server
+repoServer:
+
+  env:
+    - name: ARGOCD_HELM_ALLOW_CONCURRENCY
+      value: "true"
+
+  volumes:
+  - configMap:
+      name: argocd-cmp-cm
+    name: cmp-plugin
+  - name: custom-tools
+    emptyDir: {}
+
+  initContainers:
+  - name: download-tools
+    image: busybox
+    env:
+      - name: AVP_VERSION
+        value: 1.17.0
+    command: [sh, -c]
+    args:
+      - >-
+        wget -q http://artifactory/software-repo/ArgoCD/vault-plugin/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -O argocd-vault-plugin &&
+        chmod +x argocd-vault-plugin &&
+        mv argocd-vault-plugin /custom-tools/
+    volumeMounts:
+      - mountPath: /custom-tools
+        name: custom-tools
+
+  extraContainers:
+  - name: vault-helm
+    command: [/var/run/argocd/argocd-cmp-server]
+    image: quay.io/argoproj/argocd:latest
+    envFrom:
+    - secretRef:
+        name: argocd-secret
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+    volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+      - mountPath: /home/argocd/cmp-server/plugins
+        name: plugins
+      - mountPath: /tmp
+        name: tmp
+
+      # Register plugins into sidecar
+      - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+        subPath: vault-helm.yaml
+        name: cmp-plugin
+
+      # Important: Mount tools into $PATH
+      - name: custom-tools
+        subPath: argocd-vault-plugin
+        mountPath: /usr/local/bin/argocd-vault-plugin

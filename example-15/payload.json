@@ -1,0 +1,3 @@
+{
+  "policy": "# Read-only permission on secrets stored at 'secret/data/mysql/webapp'\npath \"secret/data/mysql/webapp\" {\n  capabilities = [ \"read\" ]\n}"
+}

@@ -3,14 +3,14 @@
 mkdir -p tmp
 
 # CREATING CLUSTER 
-kind create cluster --config ./kind/argocd-cluster-13.yaml
+kind create cluster --config ./kind/argocd-cluster-15.yaml
 
 # deploying ingress
 kubectl apply -f ./kind/nginx-ingress-kind-deploy.yaml
 sleep 15
 echo "Waiting for ingress-nginx pod to be ready $(date)"
 kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
-echo "Ingress-nginx pod ready $(date)"
+echo "Ingress-nginx pod ready $(date)" 
 
 # INSTALL HASHICORP VAULT
 echo "Installing Hashicorp Vault" 
@@ -54,7 +54,7 @@ echo "ArgoCD Admin pass: $argoPass"
 echo "---------------------------------------"
 echo $argoPass > ./tmp/admin-password-argocd.txt
 
-kubectl apply -f example-13.manifests.app.yaml
+kubectl apply -f example-15.helmchart.app.yaml 
 
 source ./list-secrets.sh
 echo "Installation finished!"
