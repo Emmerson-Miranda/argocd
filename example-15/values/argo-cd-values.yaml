@@ -27,7 +27,6 @@ server:
 configs:
   # ConfigMap for Config Management Plugins
   # Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/config-management-plugins/
-
   secret:
     extra:
       VAULT_ADDR: "${vault_address}"
@@ -43,36 +42,23 @@ configs:
 
     # -- Plugin yaml files to be added to argocd-cmp-cm
     plugins:
-
-      vault-helm: 
+      argocd-vault-plugin:
         allowConcurrency: true
         discover:
           find:
             command:
-              - sh
-              - "-c"
-              - "find . -name 'Chart.yaml' && find . -name '*values.yaml'"
+            - sh
+            - "-c"
+            - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
         generate:
           command:
-          - sh
-          - -c
-          - | 
-            helm template $ARGOCD_ENV_HELM_RELEASE_NAME --include-crds --api-versions ${argocd_api_versions} -n $ARGOCD_APP_NAMESPACE  $${ARGOCD_ENV_HELM_ARGS_ADD_FILES} $${ARGOCD_ENV_HELM_ARGS} . |
-            argocd-vault-plugin generate --verbose-sensitive-output -
-        init:
-          command:
-          - sh
-          - -c
-          - |
-            git clone http://gitlab/devops/config/cd/platform.git platform && mkdir -p $${ARGOCD_ENV_HELM_ARGS_FOLDERS}  && touch $${ARGOCD_ENV_HELM_ARGS_ADD_FILES}
+          - argocd-vault-plugin
+          - generate
+          - "."
         lockRepo: false
 
 ## Repo Server
 repoServer:
-
-  env:
-    - name: ARGOCD_HELM_ALLOW_CONCURRENCY
-      value: "true"
 
   volumes:
   - configMap:
@@ -83,44 +69,48 @@ repoServer:
 
   initContainers:
   - name: download-tools
-    image: busybox
+    image: registry.access.redhat.com/ubi8
     env:
-      - name: AVP_VERSION
-        value: 1.17.0
+    - name: AVP_VERSION
+      value: 1.16.1
     command: [sh, -c]
     args:
-      - >-
-        wget -q http://artifactory/software-repo/ArgoCD/vault-plugin/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -O argocd-vault-plugin &&
-        chmod +x argocd-vault-plugin &&
-        mv argocd-vault-plugin /custom-tools/
+    - >-
+      curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin && chmod +x argocd-vault-plugin && mv argocd-vault-plugin /custom-tools/
     volumeMounts:
-      - mountPath: /custom-tools
-        name: custom-tools
+    - mountPath: /custom-tools
+      name: custom-tools
 
   extraContainers:
-  - name: vault-helm
+  - name: avp
     command: [/var/run/argocd/argocd-cmp-server]
-    image: quay.io/argoproj/argocd:latest
-    envFrom:
-    - secretRef:
-        name: argocd-secret
+    image: registry.access.redhat.com/ubi8
     securityContext:
       runAsNonRoot: true
       runAsUser: 999
+    env:
+    - name: VAULT_ADDR
+      value: http://vault.vault.svc.cluster.local:8200
+    - name: VAULT_TOKEN
+      value: VAULT_TOKEN_PLACEHOLDER
+    - name: AVP_TYPE
+      value: vault
+    - name: AVP_AUTH_TYPE
+      value: token
     volumeMounts:
-      - mountPath: /var/run/argocd
-        name: var-files
-      - mountPath: /home/argocd/cmp-server/plugins
-        name: plugins
-      - mountPath: /tmp
-        name: tmp
+    - mountPath: /var/run/argocd
+      name: var-files
+    - mountPath: /home/argocd/cmp-server/plugins
+      name: plugins
+    - mountPath: /tmp
+      name: tmp
 
-      # Register plugins into sidecar
-      - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-        subPath: vault-helm.yaml
-        name: cmp-plugin
+    # Register plugins into sidecar
+    - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+      subPath: argocd-vault-plugin.yaml
+      name: cmp-plugin
 
-      # Important: Mount tools into $PATH
-      - name: custom-tools
-        subPath: argocd-vault-plugin
-        mountPath: /usr/local/bin/argocd-vault-plugin
+    # Important: Mount tools into $PATH
+    - name: custom-tools
+      subPath: argocd-vault-plugin
+      mountPath: /usr/local/bin/argocd-vault-plugin
