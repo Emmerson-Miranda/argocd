@@ -54,6 +54,7 @@ echo "ArgoCD Admin pass: $argoPass"
 echo "---------------------------------------"
 echo $argoPass > ./tmp/admin-password-argocd.txt
 
+kubectl apply -f example-15.manifests.app.yaml 
 kubectl apply -f example-15.helmchart.app.yaml 
 
 source ./list-secrets.sh
