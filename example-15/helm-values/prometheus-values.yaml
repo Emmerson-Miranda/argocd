@@ -1,16 +1,15 @@
-
-
 server:
 
   ingress:
-
     enabled: true
 
     hosts: 
-      - prometheus.owl.com
+      - <path:kv-v2/data/my-secrets/prometheus#host>
+      #- prometheus.owl.com
 
   ## hostAliases allows adding entries to /etc/hosts inside the containers
   hostAliases: 
     - ip: "127.0.0.1"
       hostnames:
-        - "prometheus.owl.com"
+        - <path:kv-v2/data/my-secrets/prometheus#host>
+        #- prometheus.owl.com
