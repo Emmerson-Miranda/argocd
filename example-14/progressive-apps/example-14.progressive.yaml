@@ -1,0 +1,51 @@
+---
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Progressive-Syncs/
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git/
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git-File-Globbing/
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: progressive-app
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/Emmerson-Miranda/argocd.git
+        revision: HEAD
+        files:
+        - path: "example-14/progressive-apps/apps/*.yaml"
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values:
+                - "1"
+          #maxUpdate: 100%  # if undefined, all applications matched are updated together (default is 100%)
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values:
+                - "2"
+        - matchExpressions:
+            - key: orderLabel
+              operator: In
+              values:
+                - "3"
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  template:
+    metadata:
+      name: 'progressive-{{.spec.order}}-{{.spec.name}}'
+      labels:
+        env-order: '{{.spec.order}}'
+    spec:
+      project: '{{.spec.project}}'
+      source:
+        repoURL: '{{.spec.source.repoURL}}'
+        targetRevision: '{{.spec.source.targetRevision}}'
+        path: guestbook/{{.cluster}}
+      destination:
+        server: '{{.spec.target.server}}'
+        namespace: '{{.spec.target.namespace}}'

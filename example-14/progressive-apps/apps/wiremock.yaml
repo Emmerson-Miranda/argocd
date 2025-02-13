@@ -1,0 +1,14 @@
+---
+spec:
+  enabled: true
+  name: wiremock
+  order: "2"
+  project: 'default'
+  # https://artifacthub.io/packages/helm/deliveryhero/wiremock
+  helm:
+    chart: 'wiremock' 
+    repoURL:  "https://charts.deliveryhero.io/"
+    targetRevision: "1.4.1"
+  target:
+    name: 'in-cluster'
+    namespace: 'wiremock'

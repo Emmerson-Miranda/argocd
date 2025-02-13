@@ -1,0 +1,14 @@
+---
+spec:
+  enabled: true
+  name: prometheus
+  order: "1"
+  project: 'default'
+  # https://artifacthub.io/packages/helm/deliveryhero/wiremock
+  helm:
+    chart: 'kube-prometheus-stack' 
+    repoURL: "https://prometheus-community.github.io/helm-charts"
+    targetRevision: "13.7.2"
+  target:
+    name: 'in-cluster'
+    namespace: 'prometheus'
