@@ -26,6 +26,7 @@ server:
 
 configs:
   cm:
+    applicationsetcontroller.enable.progressive.syncs: true
     resource.customizations: |
       argoproj.io/Application:
         health.lua: |

@@ -10,5 +10,5 @@ spec:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     targetRevision: "13.7.2"
   target:
-    name: 'in-cluster'
+    server: 'in-cluster'
     namespace: 'prometheus'

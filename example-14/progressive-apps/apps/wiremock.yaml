@@ -10,5 +10,5 @@ spec:
     repoURL:  "https://charts.deliveryhero.io/"
     targetRevision: "1.4.1"
   target:
-    name: 'in-cluster'
+    server: 'in-cluster'
     namespace: 'wiremock'

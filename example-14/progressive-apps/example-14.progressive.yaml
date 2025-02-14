@@ -43,9 +43,9 @@ spec:
     spec:
       project: '{{.spec.project}}'
       source:
-        repoURL: '{{.spec.source.repoURL}}'
-        targetRevision: '{{.spec.source.targetRevision}}'
-        path: guestbook/{{.cluster}}
+        repoURL: '{{.spec.helm.repoURL}}'
+        targetRevision: '{{.spec.helm.targetRevision}}'
+        #path: guestbook/{{.cluster}}
       destination:
         server: '{{.spec.target.server}}'
         namespace: '{{.spec.target.namespace}}'

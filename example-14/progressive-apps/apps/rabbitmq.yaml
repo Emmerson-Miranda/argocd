@@ -11,5 +11,5 @@ spec:
     repoURL: 'https://charts.bitnami.com/bitnami'
     targetRevision: '13.0.2'
   target:
-    name: 'in-cluster'
+    server: 'in-cluster'
     namespace: 'progressive-rabbitmq'
