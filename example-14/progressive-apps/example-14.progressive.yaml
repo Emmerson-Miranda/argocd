@@ -42,10 +42,21 @@ spec:
         env-order: '{{.spec.order}}'
     spec:
       project: '{{.spec.project}}'
-      source:
+      sources:
+      - helm:
+        chart: '{{.spec.helm.chart}}'
         repoURL: '{{.spec.helm.repoURL}}'
         targetRevision: '{{.spec.helm.targetRevision}}'
-        #path: guestbook/{{.cluster}}
+          #path: guestbook/{{.cluster}}
       destination:
-        server: '{{.spec.target.server}}'
+        name: '{{.spec.target.server}}'
         namespace: '{{.spec.target.namespace}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
