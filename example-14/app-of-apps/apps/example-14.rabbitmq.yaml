@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
   labels:
-    wave: "-10"
+    order: "2"
   finalizers:
       # The default behaviour is foreground cascading deletion
       - resources-finalizer.argocd.argoproj.io
